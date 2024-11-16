@@ -1,0 +1,394 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+    --cor1: #8060F6;
+    --cor2: #A594F9;
+    --cor3: #0E131F;
+    --cor4: #1B1239;
+    --cor-fundo: #EFEFEF;
+    --fonte-principal: 'Inter', sans-serif;
+    --fonte-menu: "Poppins", sans-serif;
+}
+
+.espaco {
+    flex-grow: 1;
+}
+
+.conteudo {
+    padding: 20px;
+}
+
+.linha {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    margin-bottom: 50px;
+}
+
+.linha .titulo {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--cor4);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.box {
+    background-color: #FFF;
+    border-radius: 10px;
+    height: 220px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.box:hover {
+    transform: scale(1.03);
+}
+
+.adc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    color: var(--cor4);
+}
+
+.meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.linha1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cor {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--cor3);
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.linha1 .titulo {
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+.linha2 {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    margin-bottom: 10px;
+}
+
+.grid .porcentagem {
+    font-size: 40px;
+    font-weight: 500;
+    font-family: var(--fonte-principal);
+}
+
+.barra-container {
+    width: 100%;
+    height: 35px;
+    background-color: var(--cor-fundo);
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.barra-progresso {
+    height: 100%;
+    background-color: var(--cor1);
+    border-radius: 25px;
+    text-align: center;
+    line-height: 35px;
+    color: white;
+    transition: width 0.3s ease;
+}
+
+.valor {
+    font-size: 16px;
+}
+
+.metaBox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal5 .box-conteudo {
+    background-color: white;
+    padding: 3%;
+    border-radius: 20px;
+    width: 65%;
+    height: 90%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal5 .colunas {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    height: 100%;
+    width: 100%;
+}
+
+.modal5 .col1 {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.modal5 .col2 {
+    padding: 2%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.modal5 .col1 .linhaTitulo {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1vw;
+}
+
+.modal5 .acoes button {
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+.modal5 .acoes button:hover {
+    transform: scale(1.05);
+}
+
+.modal5 .col1 .alt i {
+    color: #e0d100;
+    font-size: 20px;
+}
+
+.modal5 .col1 .delete i {
+    color: #970019;
+    font-size: 20px;
+}
+
+.modal5 .col1 .grafico-meta {
+    width: 100%;
+    height: 60%;
+}
+
+.modal5 .container-graf {
+    height: 100%;
+}
+
+.modal5 canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.modal5 .legenda {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+#valorReservado {
+    font-weight: 600;
+}
+
+.modal5 .texto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1%;
+}
+
+.modal5 .texto .frase {
+    font-size: 0.9rem;
+    font-weight: 300;
+}
+
+.modal5 .col2 h2 {
+    font-size: 1.2rem;
+}
+
+.modal5 .movimentacoes {
+    height: calc(100% - 20px); /* Ajuste conforme o espaço disponível */
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#listaDepositos {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Permite que ele cresça para preencher o espaço */
+    height: 0;    /* Permite que ele pegue a altura disponível no flex */
+    overflow-y: auto;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+.modal5 .linha-dep {
+    display: flex;
+    flex-direction: row;
+    font-size: 1rem;
+}
+
+.modal5 .positivo {
+    color: #74c69d;
+}
+
+.modal5 .negativo {
+    color: #f68274;
+}
+
+.btn-deposito {
+    background-image: linear-gradient(to bottom right, #8060F6, #6139f2);
+    border-radius: 10px;
+    color: #fff;
+    border: none;
+    height: 8vh;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.btn-deposito:hover {
+    transform: scale(1.05);
+}
+
+.adc-deposito {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.conteudo-deposito {
+    background-color: white;
+    padding: 2% 2% 1.5% 2%;
+    border-radius: 20px;
+    width: 25%;
+    height: 25%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+#form-deposito {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.linha-adc-dep {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+
+.adc-deposito input[type="radio"] {
+    display: none;
+}
+
+.adc-deposito label {
+    cursor: pointer;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border: none;
+    transition: all 0.2s ease;
+    display: flex;
+}
+
+.adc-deposito label:hover {
+    transform: scale(1.05);
+}
+
+.adc-deposito label[for="adcDep"] {
+    border: 2px solid #74c69d;
+    color: #74c69d;
+}
+
+.adc-deposito label[for="retDep"] {
+    border: 2px solid #f68274;
+    color: #f68274;
+}
+
+.adc-deposito #adcDep:checked + label {
+    background-image: linear-gradient(to bottom right, #74c69d, #56bb89);
+    color: #fff;
+}
+
+.adc-deposito #retDep:checked + label {
+    background-image: linear-gradient(to bottom right, #f68274, #f96353);
+    color: #fff;
+}
+
+.input-deposito {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    border-bottom: 1px solid var(--cor4);
+    margin-left: 10px;
+}
+
+.adc-deposito input[type="text"] {
+    border: none;
+    height: 40px;
+    padding: 10px;
+    width: 100%;
+}
+
+.btnAdcDeposito {
+    background-image: linear-gradient(to bottom right, #8060F6, #6139f2);
+    border-radius: 8px;
+    color: #fff;
+    border: none;
+    height: 40%;
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.btnAdcDeposito:hover {
+    transform: scale(1.05);
+}

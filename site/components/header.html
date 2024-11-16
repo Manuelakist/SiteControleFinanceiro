@@ -1,0 +1,195 @@
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+
+<div class="barra">
+    <p>Olá, Manuela</p>
+    <div class="espaco"></div>
+    <div class="botoes-nav">
+        <button class="adc-btn" id="optionsButton">+</button>
+        <div id="optionsMenu" class="options-menu" style="display: none;">
+            <div class="option" data-modal="modal1">
+                <i class="material-icons">trending_down</i>
+                <p>despesa</p>
+            </div>
+            <div class="option" data-modal="modal2">
+                <i class="material-icons">trending_up</i>
+                <p>receita</p>
+            </div>
+            <div class="option" data-modal="modal3">
+                <i class="material-icons">account_balance_wallet</i>
+                <p>orçamento</p>
+            </div>
+            <div class="option" data-modal="modal4">
+                <i class="material-symbols-outlined">money_bag</i>
+                <p>meta</p>
+            </div>
+        </div>
+        <select name="select-conta" id="select">
+            <option value="1">Conta 1</option>
+            <option value="2">Poupança</option>
+            <option value="3">...</option>
+        </select>
+    </div>
+</div>
+
+<div id="modal1" id-despesa="" class="adc-despesa modal" style="display: none;">
+    <div class="adc-conteudo">
+        <span class="close-btn" id="closePopup" data-modal="modal1">&times;</span>
+        <h3 id="tituloAdcDespesa">Nova Despesa</h3>
+        <form id="form-despesa">
+            <div class="inputs">
+                <div class="input-desc linha">
+                    <i class="material-icons">edit</i>
+                    <input id="inputDescDespesa" type="text" placeholder="descrição" required>
+                </div>
+                <div class="linha-valor">
+                    <div class="input-valor linha">
+                        <i class="material-icons">attach_money</i>
+                        <span class="rs">R$</span>
+                        <input id="inputValorDespesa" type="text" placeholder="valor" required>
+                    </div>
+                    <div class="input-categoria linha">
+                        <i class="material-icons">category</i>
+                        <select name="categoria" id="categoriaDes">
+                        </select>
+                    </div>
+                </div>
+                <div class="input-tipo linha">
+                    <div class="radio-tipo">
+                        <input type="radio" id="pontual-des" name="tipo-des" value="pontual" checked>
+                        <label for="pontual-des">pontual</label>
+                        <input type="radio" id="fixa-des" name="tipo-des" value="fixa">
+                        <label for="fixa-des">fixa</label>
+                        <input type="radio" id="parcelada-des" name="tipo-des" value="parcelada">
+                        <label for="parcelada-des">parcelada</label>
+                    </div>
+                    <div class="input-parcela" id="inputParcelasDes" style="visibility: hidden;">
+                        <i class="material-icons">credit_card</i>
+                        <input id="inputParcelasDespesa" type="number" placeholder="parcelas" min="1">
+                    </div>
+                </div>
+                <div class="input-data linha">
+                    <i class="material-icons">calendar_today</i>
+                    <input id="inputDataDespesa" type="date" required>
+                </div>
+            </div>
+            <button class="btn-salvar" type="submit">salvar</button>
+        </form>
+    </div>
+</div>
+
+<div id="modal2" id-receita="" class="adc-receita modal" style="display: none;">
+    <div class="adc-conteudo">
+        <span class="close-btn" id="closePopup" data-modal="modal2">&times;</span>
+        <h3 id="tituloAdcReceita">Nova Receita</h3>
+        <form id="form-receita">
+            <div class="inputs">
+                <div class="input-desc linha">
+                    <i class="material-icons">edit</i>
+                    <input id="inputDescReceita" type="text" placeholder="descrição" required>
+                </div>
+                <div class="linha-valor">
+                    <div class="input-valor linha">
+                        <i class="material-icons">attach_money</i>
+                        <span class="rs">R$</span>
+                        <input id="inputValorReceita" type="text" placeholder="valor" required>
+                    </div>
+                    <div class="input-categoria linha">
+                        <i class="material-icons">category</i>
+                        <select name="categoria" id="categoriaRec">
+                        </select>
+                    </div>
+                </div>
+                <div class="input-tipo linha">
+                    <div class="radio-tipo">
+                        <input type="radio" id="pontual-rec" name="tipo-rec" value="pontual" checked>
+                        <label for="pontual-rec">pontual</label>
+                        <input type="radio" id="fixa-rec" name="tipo-rec" value="fixa">
+                        <label for="fixa-rec">fixa</label>
+                        <input type="radio" id="parcelada-rec" name="tipo-rec" value="parcelada">
+                        <label for="parcelada-rec">parcelada</label>
+                    </div>
+                    <div class="input-parcela" id="inputParcelasRec" style="visibility: hidden;">
+                        <i class="material-icons">credit_card</i>
+                        <input type="number" id="inputParcelasReceita" placeholder="parcelas" min="1">
+                    </div>
+                </div>
+                <div class="input-data linha">
+                    <i class="material-icons">calendar_today</i>
+                    <input id="inputDataReceita" type="date" required>
+                </div>
+            </div>
+            <button class="btn-salvar">salvar</button>
+        </form>
+    </div>
+</div>
+
+<div id="modal3" id-orcamento="" class="adc-orcamento modal" style="display: none;">
+    <div class="adc-conteudo">
+        <span class="close-btn" id="closePopup" data-modal="modal3">&times;</span>
+        <h3 id="tituloAdcOrcamento">Novo Orçamento</h3>
+        <form id="form-orcamento">
+            <div class="inputs">
+                <div class="linha-categoria">
+                    <p>Categoria:</p>
+                    <div class="input-categoria linha">
+                        <i class="material-icons">category</i>
+                        <select name="categoria" id="categoriaOrc">
+                        </select>
+                    </div>
+                    <p>Selecione o valor máximo que você deseja gastar esse mês em <span
+                            id="categoriaSelecionada">categoria</span>:</p>
+                    <div class="input-valor linha">
+                        <i class="material-icons">attach_money</i>
+                        <span class="rs">R$</span>
+                        <input type="text" placeholder="valor" id="inputValorOrcamento" required>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-salvar">salvar</button>
+        </form>
+    </div>
+</div>
+
+<div id="modal4" id-meta="" class="adc-meta modal" style="display: none;">
+    <div class="adc-conteudo">
+        <span class="close-btn" id="closePopup" data-modal="modal4">&times;</span>
+        <h3 id="tituloAdcMeta">Nova Meta</h3>
+        <form id="form-meta">
+            <div class="inputs">
+                <div class="input-objt linha">
+                    <div class="linha-objt">
+                        <i class="material-icons">edit</i>
+                        <p>Descrição da meta</p>
+                    </div>
+                    <input type="text" placeholder="objetivo" id="inputObjetivoMeta" required>
+                </div>
+                <div class="input-valor linha">
+                    <div class="linha1-valor">
+                        <i class="material-icons">attach_money</i>
+                        <p>Valor da meta</p>
+                    </div>
+                    <div class="linha2-valor">
+                        <span class="rs">R$</span>
+                        <input type="text" placeholder="valor" id="inputValorMeta" required>
+                    </div>
+                </div>
+                <div class="input-data linha">
+                    <div class="linha-data">
+                        <i class="material-icons">calendar_today</i>
+                        <p>Data final</p>
+                        <i class="material-icons-outlined info">info</i>
+                        <span class="info-text">Data até a qual você deseja guardar o valor estipulado</span>
+                    </div>
+                    <input type="date" id="inputDataMeta" required>
+                </div>
+            </div>
+            <button class="btn-salvar">salvar</button>
+        </form>
+    </div>
+</div>
+
+<link rel="stylesheet" href="../assets/css/components.css">

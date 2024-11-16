@@ -1,0 +1,118 @@
+<div class="container-rel">
+    <div class="container-balanco row">
+        <div class="col1">
+            <h1>Balanço Geral</h1>
+            <ul>
+                <li>Você obteve uma taxa total de crescimento de <b>35%</b> em comparação ao mês anterior.</li>
+                <li>O valor mais alto registrado foi de <b>R$ 29.000,00</b> em outubro, enquanto o menor foi <b>R$
+                        10.125,90</b> em março.</li>
+                <li>Sua média de receita mensal é de R$ <b>20.000,00</b>.</li>
+            </ul>
+        </div>
+        <div class="col2">
+            <div class="filtros">
+                <input type="radio" name="radioGrafs" id="graf1" value="balGeral" checked>
+                <label for="graf1">saldo total</label>
+                <input type="radio" name="radioGrafs" id="graf2" value="balDespesas">
+                <label for="graf2">despesas</label>
+                <input type="radio" name="radioGrafs" id="graf3" value="balReceitas">
+                <label for="graf3">receitas</label>
+                <div class="espaco"></div>
+                <select name="tempo" id="selectTempo">
+                    <option value="anual">anual</option>
+                    <option value="mensal">mensal</option>
+                </select>
+            </div>
+            <div class="grafico1">
+                <canvas id="balGeral"></canvas>
+                <canvas id="balDespesas" style="display: none;"></canvas>
+                <canvas id="balReceitas" style="display: none;"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="container-categorias row">
+        <div class="l1">
+            <div class="col1">
+                <div class="grafico2">
+                    <canvas id="pizzaOrc"></canvas>
+                </div>
+            </div>
+            <div class="col2">
+                <h1>Despesas por Categoria</h1>
+                <div class="container-cat">
+                    <div class="linha-cat">
+                        <div class="lc1">
+                            <p>mercado</p>
+                            <div class="espaco"></div>
+                            <p>R$ 200,00</p>
+                        </div>
+                        <div class="lc2">
+                            <p>porcentagem</p>
+                            <div class="espaco"></div>
+                            <p>25%</p>
+                        </div>
+                    </div>
+                    <div class="linha-cat">
+                        <div class="lc1">
+                            <p>contas</p>
+                            <div class="espaco"></div>
+                            <p>R$ 1100,00</p>
+                        </div>
+                        <div class="lc2">
+                            <p>porcentagem</p>
+                            <div class="espaco"></div>
+                            <p>70%</p>
+                        </div>
+                    </div>
+                    <div class="linha-cat">
+                        <div class="lc1">
+                            <p>lazer</p>
+                            <div class="espaco"></div>
+                            <p>R$ 300,00</p>
+                        </div>
+                        <div class="lc2">
+                            <p>porcentagem</p>
+                            <div class="espaco"></div>
+                            <p>30%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-budgets row">
+        <div class="titulo-legenda">
+            <h1>Orçamento x Gasto</h1>
+            <div class="espaco"></div>
+            <div class="legenda-budgets">
+                <div class="cor1"></div>
+                <p>orçamento</p>
+                <div class="cor2"></div>
+                <p>gastos</p>
+            </div>
+        </div>
+        <div class="grafico3">
+            <canvas id="barraOrc"></canvas>
+        </div>
+    </div>
+    <div class="container-histograma row">
+        <div class="grafico4">
+            <canvas id="histograma"></canvas>
+        </div>
+        <div class="col2">
+            <div class="col1">
+                <h1>Análise de Gastos</h1>
+                <ul>
+                    <li>A maioria das despesas está na faixa de R$ 0 a R$ 500, representando <b>55%</b> do total de
+                        transações.</li>
+                    <li>A média dos valores das despesas é de aproximadamente <b>R$ 670</b>.</li>
+                    <li>A mediana das despesas é de aproximadamente <b>R$ 400</b>.</li>
+                    <li>A faixa de R$ 1000 a R$ 2000 apresenta um número menor de transações, mas contribui com
+                        <b>22%</b> do valor mensal.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="../assets/css/reports.css">

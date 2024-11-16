@@ -1,0 +1,113 @@
+<div class="fc">
+    <div class="grid">
+        <div class="despesa" id="despesas">
+            <div class="linha1">
+                <p class="titulo">Despesas</p>
+                <div class="mes">
+                    <button class="alt"><i class="material-symbols-outlined" id="btn-prev">chevron_left</i></button>
+                    <div class="mes-atual">
+                        <p id="textoMesDespesa"></p>
+                        <p id="textoAnoDespesa"></p>
+                    </div>
+                    <button class="alt"><i class="material-symbols-outlined" id="btn-next">chevron_right</i></button>
+                </div>
+                <div class="espaco"></div>
+                <p class="valor" id="cashflowValorDespesas">R$350,00</p>
+            </div>
+            <div class="box grid-despesa">
+                <div class="linha2">
+                    <div class="radio-desp" id="radioDespesas">
+                        <input type="radio" id="todasDes" name="cashflow-des" value="todas" checked>
+                        <label for="todasDes">Todas</label>
+                        <input type="radio" id="fixasDes" name="cashflow-des" value="fixa">
+                        <label for="fixasDes">Fixas</label>
+                        <input type="radio" id="parceladasDes" name="cashflow-des" value="parcelada">
+                        <label for="parceladasDes">Parceladas</label>
+                        <input type="radio" id="pontuaisDes" name="cashflow-des" value="pontual">
+                        <label for="pontuaisDes">Pontuais</label>
+                    </div>
+                    <div class="espaco"></div>
+                    <select class="seletor" id="filtroDespesas">
+                    </select>
+                </div>
+                <div class="container-tabela">
+                    <div class="cabecalho">
+                        <div class="cbc-cor">
+                            <p>classe</p>
+                        </div>
+                        <div class="cbc-titulo">
+                            <p>descrição</p>
+                        </div>
+                        <div class="cbc-valor">
+                            <p>valor</p>
+                        </div>
+                        <div class="cbc-data">
+                            <p>data</p>
+                        </div>
+                        <div class="cbc-categoria">
+                            <p>categoria</p>
+                        </div>
+                    </div>
+                    <div class="tabela" id="tabelaDespesa">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="receita" id="receitas">
+            <div class="linha1">
+                <p class="titulo">Receitas</p>
+                <div class="mes">
+                    <button class="alt"><i class="material-symbols-outlined" id="btn-prev-rec">chevron_left</i></button>
+                    <div class="mes-atual">
+                        <p id="textoMesReceita">outubro</p>
+                        <p id="textoAnoReceita">2024</p>
+                    </div>
+                    <button class="alt"><i class="material-symbols-outlined" id="btn-next-rec">chevron_right</i></button>
+                </div>
+                <div class="espaco"></div>
+                <p class="valor" id="cashflowValorReceitas">R$2500,00</p>
+            </div>
+            <div class="box grid-receita">
+                <div class="linha2">
+                    <div class="radio-rec">
+                        <input type="radio" id="todasRec" name="cashflow-rec" value="todas" checked>
+                        <label for="todasRec">Todas</label>
+                        <input type="radio" id="fixasRec" name="cashflow-rec" value="fixa">
+                        <label for="fixasRec">Fixas</label>
+                        <input type="radio" id="parceladasRec" name="cashflow-rec" value="parcelada">
+                        <label for="parceladasRec">Parceladas</label>
+                        <input type="radio" id="pontuaisRec" name="cashflow-rec" value="pontual">
+                        <label for="pontuaisRec">Pontuais</label>
+                    </div>
+                    <div class="espaco"></div>
+                    <select class="seletor" id="filtroReceitas">
+                    </select>
+                </div>
+                <div class="container-tabela">
+                    <div class="cabecalho">
+                        <div class="cbc-cor">
+                            <p>classe</p>
+                        </div>
+                        <div class="cbc-titulo">
+                            <p>descrição</p>
+                        </div>
+                        <div class="cbc-valor">
+                            <p>valor</p>
+                        </div>
+                        <div class="cbc-data">
+                            <p>data</p>
+                        </div>
+                        <div class="cbc-categoria">
+                            <p>categoria</p>
+                        </div>
+                    </div>
+                    <div class="tabela" id="tabelaReceita">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="../assets/css/cashflow.css">

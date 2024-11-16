@@ -1,0 +1,368 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+:root {
+    --cor1: #8060F6;
+    --cor2: #A594F9;
+    --cor3: #0E131F;
+    --cor4: #1B1239;
+    --cor-fundo: #EFEFEF;
+    --fonte-principal: 'Inter', sans-serif;
+    --fonte-menu: "Poppins", sans-serif;
+}
+
+.espaco {
+    flex-grow: 1;
+}
+
+.grid {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 80px;
+    padding: 20px;
+}
+
+.linha1 {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    margin-bottom: 50px;
+}
+
+.linha1 .titulo {
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--cor4);
+}
+
+.mes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 20px;
+    border-bottom: 1pz;
+}
+
+.mes button {
+    border: none;
+    background-color: var(--cor-fundo);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.mes button:hover {
+    transform: scale(1.1);
+}
+
+.mes i {
+    color: var(--cor1);
+    font-size: 40px;
+    padding-top: 5px;
+}
+
+.mes-atual {
+    border: 2px solid var(--cor1);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    margin: 0 5px;
+}
+
+#textoMesDespesa,
+#textoMesReceita {
+    color: var(--cor1);
+    font-weight: 700;
+}
+
+#textoAnoDespesa,
+#textoAnoReceita {
+    margin-left: 5px;
+    color: var(--cor1);
+    font-weight: 400;
+}
+
+.linha1 .valor {
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--cor4);
+    padding-right: 20px;
+}
+
+.grid-despesa select,
+.grid-receita select {
+    border: none;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.grid-despesa .linha2,
+.grid-receita .linha2 {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.grid-despesa .linha2 button,
+.grid-receita .linha2 button {
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    font-family: var(--fonte-principal);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+.radio-desp input,
+.radio-rec input {
+    display: none;
+}
+
+.radio-desp label,
+.radio-rec label {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+    font-family: var(--fonte-principal);
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 10px;
+    transition: 0.2s all;
+}
+
+label[for="todasDes"],
+label[for="todasRec"] {
+    border: 3px solid var(--cor1);
+}
+
+label[for="fixasDes"],
+label[for="fixasRec"] {
+    border: 3px solid var(--cor3);
+}
+
+label[for="parceladasDes"],
+label[for="parceladasRec"] {
+    border: 3px solid var(--cor2);
+}
+
+label[for="pontuaisDes"],
+label[for="pontuaisRec"] {
+    border: 3px solid var(--cor4);
+}
+
+#todasDes:checked+label,
+#todasRec:checked+label {
+    background-color: var(--cor1);
+    color: white;
+}
+
+#fixasDes:checked+label,
+#fixasRec:checked+label {
+    background-color: var(--cor3);
+    color: white;
+}
+
+#parceladasDes:checked+label,
+#parceladasRec:checked+label {
+    background-color: var(--cor2);
+    color: white;
+}
+
+#pontuaisDes:checked+label,
+#pontuaisRec:checked+label {
+    background-color: var(--cor4);
+    color: white;
+}
+
+.radio-desp label:hover,
+.radio-rec label:hover {
+    transform: scale(1.05);
+}
+
+.seletor {
+    cursor: pointer;
+}
+
+.container-tabela {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    height: 450px;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cabecalho {
+    display: grid;
+    grid-template-columns: 1.5fr 3fr 2fr 2fr 60px;
+    align-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--cor4);
+    margin-bottom: 10px;
+    margin-top: 5px;
+    padding: 0 20px 0 20px;
+}
+
+.grid-despesa .tabela,
+.grid-receita .tabela {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+    padding-top: 20px;
+    margin-top: 10px;
+    max-height: 100%;
+    scrollbar-width: none;
+}
+
+.grid-despesa .tabela::-webkit-scrollbar {
+    display: none;
+}
+
+.grid-despesa .tabela::-webkit-scrollbar-thumb {
+    background: #8060F6;
+    border-radius: 8px;
+}
+
+.grid-despesa .tabela:hover,
+.grid-receita .tabela:hover {
+    scrollbar-width: thin;
+}
+
+.grid-despesa .tabela:hover::-webkit-scrollbar,
+.grid-receita .tabela:hover::-webkit-scrollbar {
+    display: block;
+    width: 8px;
+}
+
+.grid-despesa .tabela .linha,
+.grid-receita .tabela .linha {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1.5fr 3fr 2fr 2fr 50px auto;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--cor-fundo);
+    padding: 12px 20px 12px 20px;
+    transition: all 0.3s ease;
+}
+
+.grid-despesa .tabela .linha:last-child,
+.grid-receita .tabela .linha:last-child {
+    border: none;
+}
+
+.grid-despesa .tabela .linha .cor,
+.grid-receita .tabela .linha .cor {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.grid-despesa .tabela .linha .titulo,
+.grid-receita .tabela .linha .titulo {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.grid-despesa .tabela .linha .valor,
+.grid-receita .tabela .linha .valor {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.grid-despesa .tabela .linha .data,
+.grid-receita .tabela .linha .data {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.grid-despesa .tabela .linha .categoria,
+.grid-receita .tabela .linha .categoria {
+    font-size: 8px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #fff;
+    background-color: #1B1239;
+    width: 50px;
+    text-align: center;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.grid-despesa .tabela .linha .acoes,
+.grid-receita .tabela .linha .acoes {
+    justify-self: end;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: width 0.8s ease, opacity 0.8s ease;
+    align-items: end;
+}
+
+.grid-despesa .tabela .linha:hover .acoes,
+.grid-receita .tabela .linha:hover .acoes {
+    width: 80px;
+    opacity: 1;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.grid-despesa .tabela .linha button,
+.grid-receita .tabela .linha button {
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+.grid-despesa .tabela .linha button:hover,
+.grid-receita .tabela .linha button:hover {
+    transform: scale(1.05);
+}
+
+.grid-despesa .tabela .linha .alt i,
+.grid-receita .tabela .linha .alt i {
+    color: #e0d100;
+    font-size: 20px;
+}
+
+.grid-despesa .tabela .linha .delete i,
+.grid-receita .tabela .linha .delete i {
+    color: #970019;
+    font-size: 20px;
+}
+
+.grid-despesa .tabela .linha .cor1,
+.grid-receita .tabela .linha .cor1 {
+    background-color: #8060F6;
+}
+
+.grid-despesa .tabela .linha .cor2,
+.grid-receita .tabela .linha .cor2 {
+    background-color: #A594F9;
+}
+
+.grid-despesa .tabela .linha .cor3,
+.grid-receita .tabela .linha .cor3 {
+    background-color: #1B1239;
+}
+
+.grid-despesa .tabela .linha .cor4,
+.grid-receita .tabela .linha .cor4 {
+    background-color: #0E131F;
+}

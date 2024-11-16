@@ -1,0 +1,75 @@
+<div class="conteudo">
+    <div class="linha">
+        <p class="titulo">Metas</p>
+    </div>
+    <div id="grid-metas" class="grid">
+    </div>
+</div>
+
+<div id="modal5" class="metaBox modal5" style="display: none;">
+    <div class="box-conteudo">
+        <span class="close-btn" id="closePopup" data-modal="modal5">&times;</span>
+        <div class="colunas">
+            <div class="col1">
+                <div>
+                    <div class="linhaTitulo">
+                        <h1 id="tituloMeta">Título da meta</h1>
+                        <div class="acoes" id="acoesMeta">
+                            <button class="alt"><i class="material-symbols-outlined">edit_square</i></button>
+                            <button class="delete"><i class="material-symbols-outlined">delete</i></button>
+                        </div>
+                    </div>
+                    <p id="dataMeta">Data final: 00/00/0000</p>
+                </div>
+                <div class="espaco"></div>
+                <div class="grafico-meta">
+                    <div class="container-graf">
+                        <canvas id="grafMeta"></canvas>
+                    </div>
+                </div>
+                <div class="espaco"></div>
+                <div>
+                    <div class="legenda">
+                        <p id="valorReservado">R$ 50.825,00</p>/<p id="valorRestante">R$ 200.000,00</p>
+                    </div>
+                    <div class="texto">
+                        <p class="frase" id="fraseMeta">você precisa guardar mensalmente:</p>
+                        <h3 id="valorMensal">R$ 475,96</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col2">
+                <div class="movimentacoes">
+                    <h2>Últimas movimentações</h2>
+                    <div class="lista" id="listaDepositos">
+                    </div>
+                </div>
+                <div class="espaco"></div>
+                <button class="btn-deposito adicionar" data-modal="modal6" id="btnDeposito">adicionar ou retirar
+                    valor</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="adc-deposito modal" id="modal6" style="display: none;">
+    <div class="conteudo-deposito">
+        <span class="close-btn" id="closePopup" data-modal="modal6">&times;</span>
+        <form id="form-deposito">
+            <div class="linha-adc-dep">
+                <input type="radio" name="radioDep" id="adcDep" value="positivo" checked>
+                <label for="adcDep">+</label>
+                <input type="radio" name="radioDep" id="retDep" value="negativo">
+                <label for="retDep">-</label>
+                <div class="input-deposito">
+                    <p>R$</p>
+                    <input type="text" id="inputValorDeposito" placeholder="valor" required>
+                </div>
+            </div>
+            <div class="espaco"></div>
+            <button class="btnAdcDeposito" id="btnAdcDeposito">salvar</button>
+        </form>
+    </div>
+</div>
+
+<link rel="stylesheet" href="../assets/css/goals.css">

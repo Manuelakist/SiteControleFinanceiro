@@ -1,0 +1,21 @@
+# Java
+*.class
+*.log
+target/
+.classpath
+.project
+.idea/
+.settings/
+.vscode/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Arquivos de configuração e logs
+.env
+.DS_Store
+
+# Arquivos do sistema operacional
+Thumbs.db

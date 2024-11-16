@@ -1,0 +1,126 @@
+<div class="vg">
+    <div class="info-box">
+        <div class="box saldo-total">
+            <p class="lbl">Saldo total</p>
+            <div class="espaco"></div>
+            <p class="valor" id="overviewSaldo"></p>
+        </div>
+        <div class="box vlr-disp">
+            <p class="lbl">Valor disponível</p>
+            <div class="espaco"></div>
+            <p class="valor" id="overviewDisponivel"></p>
+        </div>
+        <div class="box total-gasto">
+            <p class="lbl">Total gasto</p>
+            <div class="espaco"></div>
+            <p class="valor" id="overviewGasto"></p>
+        </div>
+        <div class="box alguma-info">
+            <p class="lbl">Receita total</p>
+            <div class="espaco"></div>
+            <p class="valor" id="overviewReceita"></p>
+        </div>
+    </div>
+    <div class="vg-tela">
+        <div class="box grid-grafico">
+            <p class="link" data-page="reports">Relatórios</p>
+            <div class="container-grafico">
+                <div class="grafico-relatorios">
+                    <canvas id="overviewRel" height="300px"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="box grid-orcamento">
+            <p class="link" data-page="budgets">Orçamentos</p>
+            <div class="container-grafico">
+                <div class="grafico-orcamentos">
+                    <canvas id="overviewOrc"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="box grid-meta">
+            <p class="link" data-page="goals">Metas</p>
+            <div class="lista-orc">
+                <div class="linha-orc">
+                    <p>meta 1</p>
+                    <div class="espaco"></div>
+                    <div class="barra-container">
+                        <div class="barra-progresso" id="barra-progresso">75%</div>
+                    </div>
+                </div>
+                <div class="linha-orc">
+                    <p>mais meta ebaa</p>
+                    <div class="espaco"></div>
+                    <div class="barra-container">
+                        <div class="barra-progresso" id="barra-progresso">75%</div>
+                    </div>
+                </div>
+                <div class="linha-orc">
+                    <p>viajar</p>
+                    <div class="espaco"></div>
+                    <div class="barra-container">
+                        <div class="barra-progresso" id="barra-progresso">75%</div>
+                    </div>
+                </div>
+                <div class="linha-orc">
+                    <p>comprar casa</p>
+                    <div class="espaco"></div>
+                    <div class="barra-container">
+                        <div class="barra-progresso" id="barra-progresso">75%</div>
+                    </div>
+                </div>
+                <div class="linha-orc">
+                    <p>meta</p>
+                    <div class="espaco"></div>
+                    <div class="barra-container">
+                        <div class="barra-progresso" id="barra-progresso">75%</div>
+                    </div>
+                </div>
+            </div>
+            <button>botao</button>
+        </div>
+        <div class="box grid-despesa">
+            <div class="linha1">
+                <p class="link" data-page="cashflow">Despesas</p>
+                <div class="espaco"></div>
+                <select name="seletor" id="filtroResumoDespesas">
+                </select>
+            </div>
+            <div class="linha2">
+                <input type="radio" name="filtroResumoDespesas" id="btn-todos" value="todas" checked>
+                <label for="btn-todos">Todas</label>
+                <input type="radio" name="filtroResumoDespesas" id="btn-fixos" value="fixa">
+                <label for="btn-fixos">Fixas</label>
+                <input type="radio" name="filtroResumoDespesas" id="btn-parceladas" value="parcelada">
+                <label for="btn-parceladas">Parceladas</label>
+                <input type="radio" name="filtroResumoDespesas" id="btn-pontuais" value="pontual">
+                <label for="btn-pontuais">Pontuais</label>
+            </div>
+            <div class="tabela" id="tabelaResumoDespesas">
+            </div>
+        </div>
+        <div class="box grid-receita">
+            <div class="linha1">
+                <p class="link" data-page="cashflow">Receitas</p>
+                <div class="espaco"></div>
+                <select name="seletor" id="filtroResumoReceitas">
+                </select>
+            </div>
+            <div class="linha2">
+                <input type="radio" name="filtroResumoReceitas" id="btn-todos-rec" value="todas" checked>
+                <label for="btn-todos-rec">Todas</label>
+                <input type="radio" name="filtroResumoReceitas" id="btn-fixos-rec" value="fixa">
+                <label for="btn-fixos-rec">Fixas</label>
+                <input type="radio" name="filtroResumoReceitas" id="btn-parceladas-rec" value="parcelada">
+                <label for="btn-parceladas-rec">Parceladas</label>
+                <input type="radio" name="filtroResumoReceitas" id="btn-pontuais-rec" value="pontual">
+                <label for="btn-pontuais-rec">Pontuais</label>
+            </div>
+            <div class="tabela" id="tabelaResumoReceitas">
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="../assets/css/overview.css">
+
