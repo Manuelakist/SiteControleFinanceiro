@@ -3,6 +3,13 @@ function converterData(data) {
     return `${partes[2]}/${partes[1]}/${partes[0]}`;  // Formata como dd/mm/yyyy
 }
 
+function converterDataSql(data) {
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Meses começam em 0, então somamos 1
+    const dia = String(data.getDate()).padStart(2, '0');
+    return `${ano}-${mes}-${dia}`;
+}
+
 function obterPrimeiroUltimoDiaDoMes(mes, ano) {
 
     const meses = [
@@ -39,8 +46,8 @@ function obterMesAtual() {
     let anoAtual = dataAtual.getFullYear();
 
     const { primeiroDia, ultimoDia } = obterPrimeiroUltimoDiaDoMes(mesAtual, anoAtual);
-    
-    return { primeiroDia, ultimoDia};
+
+    return { primeiroDia, ultimoDia };
 }
 
 function contarMesesAte(dataFutura) {
@@ -81,4 +88,27 @@ function obterDataAtual() {
     const mes = String(hoje.getMonth() + 1).padStart(2, '0'); // Mes começa do 0, então somamos 1
     const dia = String(hoje.getDate()).padStart(2, '0'); // Garante que o dia tenha dois dígitos
     return `${ano}-${mes}-${dia}`;
+}
+
+function obterPrimeiroUltimoDiaDoAno() {
+    const hoje = new Date();
+
+    // Primeiro dia do ano
+    const primeiroDia = new Date(hoje.getFullYear(), 0, 1); // Janeiro (0) e o dia 1
+
+    // Último dia do ano
+    const ultimoDia = new Date(hoje.getFullYear(), 11, 31); // Dezembro (11) e o dia 31
+
+    return {
+        primeiroDia: converterDataSql(primeiroDia),
+        ultimoDia: converterDataSql(ultimoDia)
+    };
+}
+
+function obterNomeMes(index) {
+    const meses = [
+        "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+        "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
+    ];
+    return meses[index];
 }

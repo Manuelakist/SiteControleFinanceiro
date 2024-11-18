@@ -36,14 +36,21 @@ function createChartsOverview() {
         }
     });
 
+    
+}
+
+function createLineChartOverview(dados) {
+
     const ctxRelatorio = document.getElementById('overviewRel').getContext('2d');
+    const scalesConfig = configurarEscalas(dados);
+
     const grafico2 = new Chart(ctxRelatorio, {
         type: 'line',
         data: {
-            labels: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out'],
+            labels: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
             datasets: [{
                 label: 'balanço geral',
-                data: [12000.42, 15450.24, 10125.90, 20680.00, 19744.85, 22380.00, 17543.45, 25000.00, 25860.00, 29000.00],
+                data: dados,
                 fill: false,
                 borderColor: '#8060F6',
                 tension: 0.05,
@@ -57,30 +64,7 @@ function createChartsOverview() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                x: {
-                    grid: {
-                        display: false // Remove o grid no eixo X
-                    }
-                },
-                y: {
-                    grid: {
-                        display: false // Remove o grid no eixo Y
-                    },
-                    beginAtZero: true,
-                    min: 0,
-                    max: 30000,
-                    ticks: {
-                        stepSize: 5000,
-                        callback: function (value, index, values) {
-                            if (value >= 1000) {
-                                return 'R$ ' + (value / 1000) + 'k'; // Exibe valores acima de 1000 como "R$ Xk"
-                            }
-                            return 'R$ ' + value;
-                        }
-                    }
-                }
-            },
+            scales: scalesConfig,
             plugins: {
                 legend: {
                     display: false,
@@ -93,6 +77,7 @@ function createChartsOverview() {
             }
         }
     });
+
 }
 
 let graficoMeta;
@@ -158,15 +143,61 @@ function createChartsGoals(soma, total) {
     });
 }
 
-function createChartsReports() {
+function configurarEscalas(dados) {
+    const minValue = Math.min(...dados);
+    const maxValue = Math.max(...dados);
+    const padding = 500;
+    const minY = minValue - padding > 0 ? minValue - padding : 0;
+    const maxY = maxValue + padding;
+    const range = maxY - minY;
+    let stepSize;
+
+    if (range <= 5000) {
+        stepSize = 500;
+    } else if (range <= 20000) {
+        stepSize = 2000;
+    } else {
+        stepSize = 5000;
+    }
+
+    return {
+        x: {
+            grid: {
+                display: false
+            }
+        },
+        y: {
+            grid: {
+                display: false
+            },
+            beginAtZero: true,
+            min: minY,
+            max: maxY,
+            ticks: {
+                stepSize: stepSize,
+                callback: function (value) {
+                    if (value >= 1000) {
+                        return 'R$ ' + (value / 1000).toFixed(1) + 'k'; 
+                    }
+                    return 'R$ ' + value;
+                }
+            }
+        }
+    };
+}
+
+function createDespesasAnoReports(dados) {
+
     const ctxRelatorio1 = document.getElementById('balDespesas').getContext('2d');
+    const scalesConfig = configurarEscalas(dados);
+
     const grafico4 = new Chart(ctxRelatorio1, {
         type: 'line',
         data: {
             labels: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
             datasets: [{
                 label: 'balanço geral',
-                data: [3100.15, 6300.50, 6200.30, 9740.75, 6900.60, 7700.25, 7500.95, 9900.10, 7200.55, 8000.85],
+                data: dados,
                 fill: true,
                 backgroundColor: 'rgba(240, 14, 0, 0.7)',
                 borderColor: '#F00E00',
@@ -180,30 +211,7 @@ function createChartsReports() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                x: {
-                    grid: {
-                        display: false // Remove o grid no eixo X
-                    }
-                },
-                y: {
-                    grid: {
-                        display: false // Remove o grid no eixo Y
-                    },
-                    beginAtZero: true,
-                    min: 0,
-                    max: 10000,
-                    ticks: {
-                        stepSize: 2000,
-                        callback: function (value, index, values) {
-                            if (value >= 1000) {
-                                return 'R$ ' + (value / 1000) + 'k'; // Exibe valores acima de 1000 como "R$ Xk"
-                            }
-                            return 'R$ ' + value;
-                        }
-                    }
-                }
-            },
+            scales: scalesConfig,
             plugins: {
                 legend: {
                     display: false,
@@ -212,14 +220,20 @@ function createChartsReports() {
         }
     });
 
+}
+
+function createReceitasAnoReports(dados) {
+
     const ctxRelatorio2 = document.getElementById('balReceitas').getContext('2d');
+    const scalesConfig = configurarEscalas(dados);
+
     const grafico5 = new Chart(ctxRelatorio2, {
         type: 'line',
         data: {
             labels: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
             datasets: [{
                 label: 'receitas',
-                data: [4200.15, 7200.50, 5300.30, 8600.75, 9100.60, 6700.25, 7800.95, 9200.10, 8400.55, 9700.85],
+                data: dados,
                 fill: true,
                 backgroundColor: 'rgba(182, 249, 201, 0.7)',
                 borderColor: '#b6f9c9',
@@ -233,30 +247,7 @@ function createChartsReports() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                x: {
-                    grid: {
-                        display: false // Remove o grid no eixo X
-                    }
-                },
-                y: {
-                    grid: {
-                        display: false // Remove o grid no eixo Y
-                    },
-                    beginAtZero: true,
-                    min: 0,
-                    max: 10000,
-                    ticks: {
-                        stepSize: 2000,
-                        callback: function (value, index, values) {
-                            if (value >= 1000) {
-                                return 'R$ ' + (value / 1000) + 'k'; // Exibe valores acima de 1000 como "R$ Xk"
-                            }
-                            return 'R$ ' + value;
-                        }
-                    }
-                }
-            },
+            scales: scalesConfig,
             plugins: {
                 legend: {
                     display: false,
@@ -265,18 +256,24 @@ function createChartsReports() {
         }
     });
 
+}
+
+function createBalancoAnoReports(dados) {
+
     const ctxRelatorio3 = document.getElementById('balGeral').getContext('2d');
+    const scalesConfig = configurarEscalas(dados);
+
     const grafico6 = new Chart(ctxRelatorio3, {
-        type: 'line', // O tipo de gráfico ainda é 'line', mas usaremos a área preenchida
+        type: 'line', 
         data: {
             labels: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
             datasets: [{
                 label: 'Balanço Geral',
-                data: [12000.42, 15450.24, 10125.90, 20680.00, 19744.85, 22380.00, 17543.45, 25000.00, 25860.00, 29000.00],
-                fill: true, // Habilita o preenchimento da área sob a linha
-                backgroundColor: 'rgba(128, 96, 246, 0.9)', // Cor de fundo com opacidade para a área
+                data: dados,
+                fill: true, 
+                backgroundColor: 'rgba(128, 96, 246, 0.9)', 
                 borderColor: '#8060F6',
-                tension: 0.1, // Pode ser ajustado para suavizar a curva
+                tension: 0.1, 
                 pointHitRadius: 20,
                 pointRadius: 0,
                 borderWidth: 2,
@@ -287,37 +284,23 @@ function createChartsReports() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                x: {
-                    grid: {
-                        display: false // Remove o grid no eixo X
-                    }
-                },
-                y: {
-                    grid: {
-                        display: false // Remove o grid no eixo Y
-                    },
-                    beginAtZero: true,
-                    min: 0,
-                    max: 30000,
-                    ticks: {
-                        stepSize: 5000,
-                        callback: function (value) {
-                            if (value >= 1000) {
-                                return 'R$ ' + (value / 1000) + 'k'; // Exibe valores acima de 1000 como "R$ Xk"
-                            }
-                            return 'R$ ' + value;
-                        }
-                    }
-                }
-            },
+            scales: scalesConfig,
             plugins: {
                 legend: {
-                    display: false, // Exibe a legenda
+                    display: false, 
                 }
             }
         }
     });
+
+}
+
+function createChartsReports() {
+    
+
+    
+
+    
 
     const ctxCategorias = document.getElementById('pizzaOrc').getContext('2d');
     const grafico1 = new Chart(ctxCategorias, {
@@ -402,70 +385,70 @@ function createChartsReports() {
         }
     });
 
-    const despesasOutubro = [
-        150.50, 300.20, 450.75, 1200.00, 50.30, 600.00, 800.00, 
-        950.10, 250.00, 400.00, 3000.00, 100.50, 200.25, 
-        80.75, 1500.00, 2000.00, 120.90, 750.40, 320.60, 
-        1300.00, 190.80, 600.50, 700.10, 250.00, 50.00
-    ];
+    // const despesasOutubro = [
+    //     150.50, 300.20, 450.75, 1200.00, 50.30, 600.00, 800.00, 
+    //     950.10, 250.00, 400.00, 3000.00, 100.50, 200.25, 
+    //     80.75, 1500.00, 2000.00, 120.90, 750.40, 320.60, 
+    //     1300.00, 190.80, 600.50, 700.10, 250.00, 50.00
+    // ];
 
-    // Configurar os intervalos do histograma
-    const faixas = [0, 100, 200, 500, 1000, 2000, 5000, 10000];
-    const contagem = new Array(faixas.length - 1).fill(0);
+    // // Configurar os intervalos do histograma
+    // const faixas = [0, 100, 200, 500, 1000, 2000, 5000, 10000];
+    // const contagem = new Array(faixas.length - 1).fill(0);
 
-    // Contar quantas despesas estão em cada faixa
-    despesasOutubro.forEach(despesa => {
-        for (let i = 0; i < faixas.length - 1; i++) {
-            if (despesa >= faixas[i] && despesa < faixas[i + 1]) {
-                contagem[i]++;
-                break;
-            }
-        }
-    });
+    // // Contar quantas despesas estão em cada faixa
+    // despesasOutubro.forEach(despesa => {
+    //     for (let i = 0; i < faixas.length - 1; i++) {
+    //         if (despesa >= faixas[i] && despesa < faixas[i + 1]) {
+    //             contagem[i]++;
+    //             break;
+    //         }
+    //     }
+    // });
 
-    const ctx = document.getElementById('histograma').getContext('2d');
-    const histograma = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: faixas.slice(0, -1).map((valor, index) => {
-                return valor + ' - ' + faixas[index + 1];
-            }),
-            datasets: [{
-                label: 'Número de Despesas',
-                data: contagem,
-                backgroundColor: '#8060F6'
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Faixas de Valor (R$)'
-                    },
-                    grid: {
-                        display: false
-                    }
-                },
-                y: {
-                    title: {
-                        display: false
-                    },
-                    beginAtZero: true,
-                    min: 0,
-                    grid: {
-                        display: false
-                    }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
+    // const ctx = document.getElementById('histograma').getContext('2d');
+    // const histograma = new Chart(ctx, {
+    //     type: 'bar',
+    //     data: {
+    //         labels: faixas.slice(0, -1).map((valor, index) => {
+    //             return valor + ' - ' + faixas[index + 1];
+    //         }),
+    //         datasets: [{
+    //             label: 'Número de Despesas',
+    //             data: contagem,
+    //             backgroundColor: '#8060F6'
+    //         }]
+    //     },
+    //     options: {
+    //         responsive: true,
+    //         scales: {
+    //             x: {
+    //                 title: {
+    //                     display: true,
+    //                     text: 'Faixas de Valor (R$)'
+    //                 },
+    //                 grid: {
+    //                     display: false
+    //                 }
+    //             },
+    //             y: {
+    //                 title: {
+    //                     display: false
+    //                 },
+    //                 beginAtZero: true,
+    //                 min: 0,
+    //                 grid: {
+    //                     display: false
+    //                 }
+    //             }
+    //         },
+    //         plugins: {
+    //             legend: {
+    //                 display: false
+    //             }
+    //         }
+    //     }
+    // });
     
 
 }

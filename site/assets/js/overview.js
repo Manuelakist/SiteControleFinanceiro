@@ -15,6 +15,7 @@ function atualizarInfos() {
         })
         .then(conta => {
             boxSaldo.textContent = `${"R$ " + conta.saldo}`;
+            saldoTotal = conta.saldo;
         })
         .catch(error => {
             console.error("Erro: ", error);
@@ -28,7 +29,7 @@ function atualizarInfos() {
             return response.json();
         })
         .then(soma => {
-            boxGasto.textContent = "R$ " +  soma;
+            boxGasto.textContent = "R$ " + soma;
         })
         .catch(error => {
             console.error("Erro: ", error);
@@ -52,8 +53,8 @@ function atualizarInfos() {
 function listarResumoDespesas() {
 
     const containerTabela = document.getElementById("tabelaResumoDespesas");
-    const filtroDespesas = document.getElementById("filtroResumoDespesas").value; 
-    const filtroTipo = document.querySelector("input[name='filtroResumoDespesas']:checked").value; 
+    const filtroDespesas = document.getElementById("filtroResumoDespesas").value;
+    const filtroTipo = document.querySelector("input[name='filtroResumoDespesas']:checked").value;
 
     let { primeiroDia, ultimoDia } = obterMesAtual();
 
@@ -110,14 +111,14 @@ function listarResumoDespesas() {
 function listarResumoDespesasFiltroTipo() {
     document.querySelectorAll("input[name='filtroResumoDespesas']").forEach(input => {
         input.addEventListener('change', function () {
-            listarResumoDespesas(); 
+            listarResumoDespesas();
         });
     });
 }
 
 function configurarFiltrosResumoDespesas() {
     document.getElementById("filtroResumoDespesas").addEventListener('change', function () {
-        listarResumoDespesas(); 
+        listarResumoDespesas();
     });
 
     listarResumoDespesasFiltroTipo();
@@ -126,8 +127,8 @@ function configurarFiltrosResumoDespesas() {
 function listarResumoReceitas() {
 
     const containerTabela = document.getElementById("tabelaResumoReceitas");
-    const filtroReceitas = document.getElementById("filtroResumoReceitas").value; 
-    const filtroTipo = document.querySelector("input[name='filtroResumoReceitas']:checked").value; 
+    const filtroReceitas = document.getElementById("filtroResumoReceitas").value;
+    const filtroTipo = document.querySelector("input[name='filtroResumoReceitas']:checked").value;
 
     let { primeiroDia, ultimoDia } = obterMesAtual();
 
@@ -148,7 +149,7 @@ function listarResumoReceitas() {
         })
         .then(receitas => {
             containerTabela.innerHTML = '';
-        
+
             const receitasFiltradasPorTipo = receitas.filter(receita => {
                 return filtroTipo === "todas" || receita.tipo === filtroTipo;
             });
@@ -184,15 +185,55 @@ function listarResumoReceitas() {
 function listarResumoReceitasFiltroTipo() {
     document.querySelectorAll("input[name='filtroResumoReceitas']").forEach(input => {
         input.addEventListener('change', function () {
-            listarResumoReceitas(); 
+            listarResumoReceitas();
         });
     });
 }
 
 function configurarFiltrosResumoReceitas() {
     document.getElementById("filtroResumoReceitas").addEventListener('change', function () {
-        listarResumoReceitas(); 
+        listarResumoReceitas();
     });
 
     listarResumoReceitasFiltroTipo();
+}
+
+async function carregarGraficoLinhaOverview() {
+
+    const somaDespesas = await somaDespesasPorMes();
+    const somaReceitas = await somaReceitasPorMes();
+    const diferencaMensal = calcularDiferencaMensal(somaReceitas, somaDespesas);
+
+    createLineChartOverview(diferencaMensal);
+
+    console.log(somaDespesas);
+    console.log(somaReceitas);
+    console.log(diferencaMensal);
+}
+
+function alterarSaldo() {
+
+    const conta = {
+        saldo: saldoTotal
+    };
+
+    fetch(`http://localhost:8080/conta/${idConta}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(conta)
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log("Saldo atualizado com sucesso.")
+            } else {
+                alert("Erro ao atualizar saldo. Tente novamente");
+            }
+        })
+        .catch(error => {
+            console.error("Erro:", error);
+            alert("Erro. Verifique a conexão com o servidor.")
+        })
+
 }

@@ -1,5 +1,6 @@
 let metaSelecionada;
 let somaMetas;
+let somaTotal;
 
 function listarMetas() {
 

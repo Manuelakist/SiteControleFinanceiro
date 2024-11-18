@@ -55,7 +55,11 @@ function adicionarDespesa() {
             if (response.ok) {
                 alert(sucesso);
                 document.getElementById("form-despesa").reset();
-                if (currentPage === "cashflow") {
+                saldoTotal -= valor;
+                alterarSaldo(saldoTotal);
+                if (currentPage === "overview") {
+                    atualizarInfos();
+                } else if (currentPage === "cashflow") {
                     listarDespesas();
                 }
                 resetarAdcDespesa();

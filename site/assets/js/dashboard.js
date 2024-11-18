@@ -1,4 +1,5 @@
 const idConta = document.querySelector(".main-content").getAttribute('idConta');
+let saldoTotal;
 
 document.addEventListener('DOMContentLoaded', () => {
     // Carrega a sidebar
@@ -90,6 +91,7 @@ function loadPage(page) {
             // Funções específicas para cada página
             if (page === 'overview') {
                 createChartsOverview();
+                carregarGraficoLinhaOverview();
                 addPageLinkListeners();
                 atualizarInfos();
                 carregarCategorias("despesa", "filtroResumoDespesas");
@@ -114,6 +116,7 @@ function loadPage(page) {
                 listarMetas();
             } else if (page === 'reports') {
                 createChartsReports();
+                carregarGraficoLinha();
                 loadReportsCharts();
             }
         })
@@ -297,3 +300,4 @@ function carregarCategorias(tipo, idSelect) {
             alert('Erro ao carregar categorias.');
         });
 }
+
