@@ -11,5 +11,9 @@ export const despesaService = {
     // Lista todas as despesas do período (para a tabela)
     async listarPorConta(idConta, dataInicial, dataFinal) {
         return await api.get(`/despesa/conta/${idConta}?dataInicial=${dataInicial}&dataFinal=${dataFinal}`);
+    },
+
+    async criar(despesaDTO) {
+        return await api.post('/despesa', despesaDTO); 
     }
 };

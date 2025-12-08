@@ -8,5 +8,9 @@ export const receitaService = {
 
     async listarPorConta(idConta, dataInicial, dataFinal) {
         return await api.get(`/receita/conta/${idConta}?dataInicial=${dataInicial}&dataFinal=${dataFinal}`);
+    },
+
+    async criar(receitaDTO) {
+        return await api.post('/receita', receitaDTO); 
     }
 };

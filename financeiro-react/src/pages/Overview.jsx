@@ -4,32 +4,50 @@ import { obterDatasMesAtual } from '../utils/dateUtils';
 import { contaService } from '../services/conta.service';
 import { despesaService } from '../services/despesa.service';
 import { receitaService } from '../services/receita.service';
+import { categoriaService } from '../services/categoria.service'; // Novo serviço
 
 export function Overview() {
     const ID_CONTA = 1; 
 
-    // ESTADOS
+    // --- ESTADOS DE DADOS ---
     const [resumo, setResumo] = useState({ saldo: 0, disponivel: 0, gasto: 0, receita: 0 });
     const [loading, setLoading] = useState(true);
 
-    // Listas Originais (trazidas do banco)
+    // Listas Originais (Do Banco)
     const [todasDespesas, setTodasDespesas] = useState([]);
     const [todasReceitas, setTodasReceitas] = useState([]);
+    
+    // Listas de Categorias (Para os Dropdowns)
+    const [catsDespesa, setCatsDespesa] = useState([]);
+    const [catsReceita, setCatsReceita] = useState([]);
 
-    // Filtros selecionados ('todas', 'fixa', 'parcelada', 'pontual')
-    const [filtroDespesa, setFiltroDespesa] = useState('todas');
-    const [filtroReceita, setFiltroReceita] = useState('todas');
+    // --- ESTADOS DE FILTRO ---
+    // Filtro de Tipo (Botões: Fixa, Parcelada...)
+    const [tipoDespesa, setTipoDespesa] = useState('todas');
+    const [tipoReceita, setTipoReceita] = useState('todas');
+
+    // Filtro de Categoria (Dropdown: Alimentação, Salário...)
+    const [catDespesaSelecionada, setCatDespesaSelecionada] = useState('todas');
+    const [catReceitaSelecionada, setCatReceitaSelecionada] = useState('todas');
 
     useEffect(() => {
         async function carregarDados() {
             try {
                 const { primeiroDia, ultimoDia } = obterDatasMesAtual();
-                const [dadosConta, somaDespesas, somaReceitas, despesas, receitas] = await Promise.all([
+
+                // Busca TUDO de uma vez (Dados + Categorias)
+                const [
+                    dadosConta, somaDespesas, somaReceitas, 
+                    despesas, receitas, 
+                    listaCatsDespesa, listaCatsReceita
+                ] = await Promise.all([
                     contaService.getContaById(ID_CONTA),
                     despesaService.getSoma(ID_CONTA, primeiroDia, ultimoDia),
                     receitaService.getSoma(ID_CONTA, primeiroDia, ultimoDia),
                     despesaService.listarPorConta(ID_CONTA, primeiroDia, ultimoDia),
-                    receitaService.listarPorConta(ID_CONTA, primeiroDia, ultimoDia)
+                    receitaService.listarPorConta(ID_CONTA, primeiroDia, ultimoDia),
+                    categoriaService.listarCategoriasDespesa(ID_CONTA), 
+                    categoriaService.listarCategoriasReceita(ID_CONTA)
                 ]);
 
                 setResumo({
@@ -39,9 +57,10 @@ export function Overview() {
                     disponivel: dadosConta?.saldo || 0 
                 });
 
-                // Salvamos os dados originais
                 setTodasDespesas(despesas || []);
                 setTodasReceitas(receitas || []);
+                setCatsDespesa(listaCatsDespesa || []);
+                setCatsReceita(listaCatsReceita || []);
 
             } catch (error) {
                 console.error("Erro ao carregar dados:", error);
@@ -52,25 +71,40 @@ export function Overview() {
         carregarDados();
     }, []);
 
-    // FUNÇÕES DE FILTRAGEM
-    // Filtra a lista original baseado no botão selecionado
+    // --- LÓGICA DE FILTRAGEM AVANÇADA ---
+    // Filtra considerando TANTO o Tipo (botão) QUANTO a Categoria (dropdown)
     const getDespesasFiltradas = () => {
-        if (filtroDespesa === 'todas') return todasDespesas;
-        return todasDespesas.filter(d => d.tipo === filtroDespesa);
+        return todasDespesas.filter(d => {
+            // 1. Filtro de Tipo (Botões)
+            const bateuTipo = tipoDespesa === 'todas' || (d.tipo && d.tipo.toLowerCase() === tipoDespesa.toLowerCase());
+            
+            // 2. Filtro de Categoria (Dropdown)
+            const bateuCategoria = catDespesaSelecionada === 'todas' || 
+                (d.categoriaDespesaDTO && d.categoriaDespesaDTO.id.toString() === catDespesaSelecionada);
+
+            return bateuTipo && bateuCategoria;
+        });
     };
 
     const getReceitasFiltradas = () => {
-        if (filtroReceita === 'todas') return todasReceitas;
-        return todasReceitas.filter(r => r.tipo === filtroReceita);
+        return todasReceitas.filter(r => {
+            const bateuTipo = tipoReceita === 'todas' || (r.tipo && r.tipo.toLowerCase() === tipoReceita.toLowerCase());
+            
+            const bateuCategoria = catReceitaSelecionada === 'todas' || 
+                (r.categoriaReceitaDTO && r.categoriaReceitaDTO.id.toString() === catReceitaSelecionada);
+
+            return bateuTipo && bateuCategoria;
+        });
     };
 
     const formatarMoeda = (valor) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
 
     const getCorTipo = (tipo) => {
-        if (tipo === 'fixa') return 'cor3';
-        if (tipo === 'parcelada') return 'cor1'; 
-        if (tipo == 'pontual') return 'cor4';
-        return 'cor2'; 
+        if (!tipo) return 'cor1';
+        const t = tipo.toLowerCase();
+        if (t === 'fixa') return 'cor2';
+        if (t === 'parcelada') return 'cor3';
+        return 'cor1';
     };
 
     return (
@@ -99,10 +133,10 @@ export function Overview() {
                 </div>
             </div>
 
-            {/* GRID */}
+            {/* GRID PRINCIPAL */}
             <div className="vg-tela">
                 
-                {/* ... PLACEHOLDERS (Graficos/Metas) MANTIDOS IGUAIS ... */}
+                {/* GRÁFICOS (Placeholders) */}
                 <div className="box grid-grafico">
                     <p className="link" data-page="reports">Relatórios</p>
                     <div className="container-grafico">
@@ -127,42 +161,48 @@ export function Overview() {
                     <button>Ver Detalhes</button>
                 </div>
 
-                {/* --- DESPESAS (Com Filtros Funcionando) --- */}
+                {/* --- DESPESAS (Com Filtros de Categoria) --- */}
                 <div className="box grid-despesa">
                     <div className="linha1">
                         <p className="link">Despesas</p>
                         <div className="espaco"></div>
-                        <select name="seletor" id="filtroResumoDespesas">
+                        
+                        {/* DROPDOWN DE CATEGORIAS (Preenchido dinamicamente) */}
+                        <select 
+                            name="seletor" 
+                            id="filtroResumoDespesas"
+                            value={catDespesaSelecionada}
+                            onChange={(e) => setCatDespesaSelecionada(e.target.value)}
+                        >
                             <option value="todas">Todas</option>
+                            {catsDespesa.map(cat => (
+                                <option key={cat.id} value={cat.id}>{cat.nome}</option>
+                            ))}
                         </select>
                     </div>
+                    
+                    {/* Filtros de Tipo (Botões) */}
                     <div className="linha2">
-                        {/* Radio buttons com IDs exatos do CSS */}
-                        
                         <input type="radio" id="btn-todos" name="filtro-des" 
-                               checked={filtroDespesa === 'todas'} 
-                               onChange={() => setFiltroDespesa('todas')} />
+                               checked={tipoDespesa === 'todas'} onChange={() => setTipoDespesa('todas')} />
                         <label htmlFor="btn-todos">Todas</label>
 
                         <input type="radio" id="btn-fixos" name="filtro-des" 
-                               checked={filtroDespesa === 'fixa'} 
-                               onChange={() => setFiltroDespesa('fixa')} />
+                               checked={tipoDespesa === 'fixa'} onChange={() => setTipoDespesa('fixa')} />
                         <label htmlFor="btn-fixos">Fixas</label>
 
                         <input type="radio" id="btn-parceladas" name="filtro-des" 
-                               checked={filtroDespesa === 'parcelada'} 
-                               onChange={() => setFiltroDespesa('parcelada')} />
+                               checked={tipoDespesa === 'parcelada'} onChange={() => setTipoDespesa('parcelada')} />
                         <label htmlFor="btn-parceladas">Parceladas</label>
 
                         <input type="radio" id="btn-pontuais" name="filtro-des" 
-                               checked={filtroDespesa === 'pontual'} 
-                               onChange={() => setFiltroDespesa('pontual')} />
+                               checked={tipoDespesa === 'pontual'} onChange={() => setTipoDespesa('pontual')} />
                         <label htmlFor="btn-pontuais">Pontuais</label>
                     </div>
 
                     <div className="tabela">
                         {loading ? <p style={{textAlign: 'center'}}>Carregando...</p> : 
-                         getDespesasFiltradas().length === 0 ? <p style={{textAlign: 'center', color: '#999'}}>Nenhuma despesa.</p> :
+                         getDespesasFiltradas().length === 0 ? <p style={{textAlign: 'center', color: '#999'}}>Nenhuma despesa encontrada.</p> :
                          getDespesasFiltradas().slice(0, 5).map(despesa => (
                             <div className="linha" key={despesa.id}>
                                 <div className={`cor ${getCorTipo(despesa.tipo)}`}></div>
@@ -176,42 +216,48 @@ export function Overview() {
                     </div>
                 </div>
 
-                {/* --- RECEITAS (Com Filtros Funcionando) --- */}
+                {/* --- RECEITAS (Com Filtros de Categoria) --- */}
                 <div className="box grid-receita">
                     <div className="linha1">
                         <p className="link">Receitas</p>
                         <div className="espaco"></div>
-                        <select name="seletor" id="filtroResumoReceitas">
+                        
+                        {/* DROPDOWN DE CATEGORIAS */}
+                        <select 
+                            name="seletor" 
+                            id="filtroResumoReceitas"
+                            value={catReceitaSelecionada}
+                            onChange={(e) => setCatReceitaSelecionada(e.target.value)}
+                        >
                             <option value="todas">Todas</option>
+                            {catsReceita.map(cat => (
+                                <option key={cat.id} value={cat.id}>{cat.nome}</option>
+                            ))}
                         </select>
                     </div>
+
+                    {/* Filtros de Tipo (Botões) */}
                     <div className="linha2">
-                        {/* Radio buttons com IDs exatos (sufixo -rec) */}
-                        
                         <input type="radio" id="btn-todos-rec" name="filtro-rec" 
-                               checked={filtroReceita === 'todas'} 
-                               onChange={() => setFiltroReceita('todas')} />
+                               checked={tipoReceita === 'todas'} onChange={() => setTipoReceita('todas')} />
                         <label htmlFor="btn-todos-rec">Todas</label>
 
                         <input type="radio" id="btn-fixos-rec" name="filtro-rec" 
-                               checked={filtroReceita === 'fixa'} 
-                               onChange={() => setFiltroReceita('fixa')} />
+                               checked={tipoReceita === 'fixa'} onChange={() => setTipoReceita('fixa')} />
                         <label htmlFor="btn-fixos-rec">Fixas</label>
 
                         <input type="radio" id="btn-parceladas-rec" name="filtro-rec" 
-                               checked={filtroReceita === 'parcelada'} 
-                               onChange={() => setFiltroReceita('parcelada')} />
+                               checked={tipoReceita === 'parcelada'} onChange={() => setTipoReceita('parcelada')} />
                         <label htmlFor="btn-parceladas-rec">Parceladas</label>
 
                         <input type="radio" id="btn-pontuais-rec" name="filtro-rec" 
-                               checked={filtroReceita === 'pontual'} 
-                               onChange={() => setFiltroReceita('pontual')} />
+                               checked={tipoReceita === 'pontual'} onChange={() => setTipoReceita('pontual')} />
                         <label htmlFor="btn-pontuais-rec">Pontuais</label>
                     </div>
 
                     <div className="tabela">
                         {loading ? <p style={{textAlign: 'center'}}>Carregando...</p> : 
-                         getReceitasFiltradas().length === 0 ? <p style={{textAlign: 'center', color: '#999'}}>Nenhuma receita.</p> :
+                         getReceitasFiltradas().length === 0 ? <p style={{textAlign: 'center', color: '#999'}}>Nenhuma receita encontrada.</p> :
                          getReceitasFiltradas().slice(0, 5).map(receita => (
                             <div className="linha" key={receita.id}>
                                 <div className={`cor ${getCorTipo(receita.tipo)}`}></div>
