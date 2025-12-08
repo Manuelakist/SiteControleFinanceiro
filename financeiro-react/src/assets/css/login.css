@@ -1,9 +1,39 @@
-body {
+/* financeiro-react/src/assets/css/login.css */
+
+/* --- CORREÇÃO PARA O REACT --- */
+/* O #root agora age como o seu antigo 'body' */
+
+/* src/assets/css/login.css */
+
+/* Adicione isso no início */
+.login-page-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Isso só deve acontecer no login */
+    position: relative;
+    background-color: #fff;
+}
+
+/* ... Mantenha o resto do CSS (espaco, login, registro...) ... */
+#root {
     display: flex;
     flex-direction: row;
     font-family: "Karla", sans-serif;
     min-height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
 }
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    background-color: #EFEFEF; /* Sua cor de fundo original */
+}
+
+/* --- SEU CSS ORIGINAL (Cópia Fiel) --- */
 
 .espaco {
     flex-grow: 1;
@@ -30,6 +60,11 @@ body {
 .login .logo {
     display: flex;
     width: 20vw;
+}
+
+/* Ajuste para React: garante que a imagem não estoure */
+.login .logo img {
+    width: 100%;
 }
 
 .login .texto-login {
@@ -62,6 +97,7 @@ body {
     color: #fff;
     border: none;
     transition: all 0.2s;
+    cursor: pointer; /* Garante o dedinho ao passar o mouse */
 }
 
 .login form button:hover {
@@ -74,6 +110,7 @@ body {
     font-size: 16px;
     color: #919aa3;
     margin-top: 3vh;
+    text-decoration: none; /* Remove sublinhado padrão de links */
 }
 
 .login .linha-registro {
@@ -95,7 +132,7 @@ body {
     position: absolute;
     top: 0;
     left: 45%;
-    transition: left 0.1s ease-in-out;
+    transition: left 0.1s ease-in-out; /* Seu tempo original */
 }
 
 .login-registro img {
@@ -130,6 +167,10 @@ body {
     width: 20vw;
 }
 
+.registro .logo img {
+    width: 100%;
+}
+
 .registro .texto-registro {
     font-size: 30px;
 }
@@ -160,6 +201,7 @@ body {
     color: #fff;
     border: none;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
 .registro form button:hover {
@@ -183,26 +225,4 @@ body {
     font-size: 18px;
     color: #1B1239;
     margin-top: 2vh;
-}
-
-#root {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    min-height: 100vh;
-    font-family: "Karla", sans-serif;
-    position: relative;
-    overflow-x: hidden; 
-}
-
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.logo-img {
-    width: 100%;
-    height: auto;
 }

@@ -1,39 +1,58 @@
 import { useState } from 'react';
-import { authService } from '../sevices/auth.service';
+import { authService } from '../services/auth.service';
 
-import '../assets/css/login.css';
+import '../assets/css/login.css'; 
 
+// Importa as imagens
+// O Vite precisa que as imagens sejam importadas assim para funcionarem no build final
 import logoImg from '../assets/img/aaaaa.svg';
 import threeChartImg from '../assets/img/threechart.png';
 
 export function Login() {
+    // ESTADOS (Variáveis que o React vigia)
+    // isRegistroAtivo: controla se o painel roxo está na esquerda ou direita
     const [isRegistroAtivo, setIsRegistroAtivo] = useState(false);
     
+    // Dados do formulário de Login
     const [email, setEmail] = useState('');
     const [senha, setSenha] = useState('');
+    
+    // Feedback para o usuário
+    const [erro, setErro] = useState('');
     const [loading, setLoading] = useState(false);
 
+    // FUNÇÃO DE LOGIN (Chamada quando clica no botão "Login")
     const handleLogin = async (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Impede a página de recarregar
+        setErro('');
         setLoading(true);
+
         try {
+            // Chama o serviço que conecta com o Java
             await authService.login(email, senha);
-            alert("Login realizado com sucesso!"); 
+            
+            // Se der certo, redireciona para o Dashboard
+            window.location.href = '/dashboard'; 
         } catch (error) {
-            alert(error.message);
+            // Se der erro (senha errada, etc), mostra na tela
+            setErro(error.message);
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <>
-            {/* Overlay Roxo com a Imagem */}
+        // A div pai "login-page-wrapper" é importante para o CSS funcionar sem quebrar o resto do site
+        <div className="login-page-wrapper">
+            
+            {/* --- PAINEL ROXO (Overlay) --- 
+                A classe 'ativo' é adicionada dinamicamente pelo React quando clicamos nos links
+            */}
             <div className={`login-registro ${isRegistroAtivo ? 'ativo' : ''}`} id="overlay">
                 <img src={threeChartImg} alt="Decoração" />
             </div>
 
-            {/* Tela de Login (Esquerda) */}
+            {/* --- TELA DE LOGIN (Fica na esquerda) --- */}
             <div className="login">
                 <div className="login-tela">
                     <div className="container-login">
@@ -48,7 +67,8 @@ export function Login() {
                                 type="text" 
                                 placeholder="Endereço de email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={(e) => setEmail(e.target.value)} // Atualiza o estado enquanto digita
+                                required
                             />
                             <input 
                                 className="form-control" 
@@ -56,7 +76,12 @@ export function Login() {
                                 placeholder="**********"
                                 value={senha}
                                 onChange={(e) => setSenha(e.target.value)}
+                                required
                             />
+                            
+                            {/* Mostra mensagem de erro se houver */}
+                            {erro && <p style={{ color: 'red', fontSize: '14px', marginTop: '5px' }}>{erro}</p>}
+
                             <button type="submit" disabled={loading}>
                                 {loading ? 'Entrando...' : 'Login'}
                             </button>
@@ -66,6 +91,7 @@ export function Login() {
                         
                         <p className="login-footer">
                             Ainda não tem uma conta?{' '}
+                            {/* Ao clicar aqui, mudamos o estado para TRUE, movendo o painel */}
                             <span 
                                 className="text-reset" 
                                 id="ir-registro" 
@@ -81,7 +107,7 @@ export function Login() {
 
             <div className="espaco"></div>
 
-            {/* Tela de Registro (Direita) */}
+            {/* --- TELA DE REGISTRO (Fica na direita) --- */}
             <div className="registro">
                 <div className="registro-tela">
                     <div className="container-registro">
@@ -90,7 +116,7 @@ export function Login() {
                         </div>
                         <p className="texto-registro">Crie sua conta</p>
                         
-                        <form action="">
+                        <form>
                             <input className="form-control" type="text" placeholder="Nome completo" />
                             <input className="form-control" type="text" placeholder="Endereço de email" />
                             <input className="form-control" type="password" placeholder="**********" />
@@ -99,6 +125,7 @@ export function Login() {
                         
                         <p className="registro-footer">
                             Já tem uma conta?{' '}
+                            {/* Ao clicar aqui, mudamos o estado para FALSE, voltando o painel */}
                             <span 
                                 className="text-reset" 
                                 id="ir-login"
@@ -111,6 +138,6 @@ export function Login() {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }

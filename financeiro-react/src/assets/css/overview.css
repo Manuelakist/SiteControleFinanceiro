@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-
 :root {
     --cor1: #8060F6;
     --cor2: #A594F9;
@@ -29,8 +28,10 @@ body {
 
 .espaco {
     flex-grow: 1;
+    min-height: 10px;
 }
 
+/* --- CARDS DO TOPO --- */
 .info-box {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -45,44 +46,23 @@ body {
     height: 100%;
     border-radius: 15px;
     padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
 }
 
-.info-box .saldo-total {
-    background-image: linear-gradient(to bottom right, #8060F6, #6139f2);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+/* CORES DOS CARDS */
+.info-box .saldo-total { background-image: linear-gradient(to bottom right, #8060F6, #6139f2); }
+.info-box .vlr-disp { background-image: linear-gradient(to bottom right, #1c2230, #04060b); color: #fff; }
+.info-box .total-gasto { background-image: linear-gradient(to bottom right, #b0a1fe, #8c79e9); }
+.info-box .alguma-info { background-image: linear-gradient(to bottom right, #231846, #130b2d); color: #fff; }
 
-.info-box .vlr-disp {
-    background-image: linear-gradient(to bottom right, #1c2230, #04060b);
-    color: #fff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+.info-box p { margin-bottom: 0 !important; line-height: 1.2; }
+.info-box .box .lbl { color: #FFF; font-size: 20px; font-weight: 400; }
+.info-box .box .valor { font-size: 30px; font-weight: 700; } 
 
-.info-box .total-gasto {
-    background-image: linear-gradient(to bottom right, #b0a1fe, #8c79e9);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.info-box .alguma-info {
-    background-image: linear-gradient(to bottom right, #231846, #130b2d);
-    color: #fff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.info-box .box .lbl {
-    color: #FFF;
-    font-size: 20px;
-}
-
-.info-box .box .valor {
-    font-size: 30px;
-    font-weight: 700;
-}
-
+/* --- GRID PRINCIPAL --- */
 .vg-tela {
     width: 100%;
     min-height: fit-content;
-    background-color: #EFEFEF;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 380px 300px;
@@ -101,69 +81,56 @@ body {
     font-size: 18px;
     cursor: pointer;
     transition: all 0.2s;
-    position: absolute;
+    margin-bottom: 10px;
+    color: var(--cor4);
 }
+.link:hover { transform: scale(1.03); }
 
-.link:hover {
-    transform: scale(1.03);
-}
+/* POSICIONAMENTO */
+.grid-grafico { grid-row: 1 / 2; grid-column: 1 / 3; }
+.grid-orcamento { grid-row: 1 / 2; grid-column: 3 / 4; }
+.grid-meta { grid-row: 1 / 2; grid-column: 4 / 5; }
+.grid-despesa { grid-row: 2 / 3; grid-column: 1 / 3; }
+.grid-receita { grid-row: 2 / 3; grid-column: 3 / 5; }
 
-.grid-grafico {
-    grid-row: 1 / 2;
-    grid-column: 1 / 3;
-}
-
+/* ESTILOS INTERNOS */
 .container-grafico {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     justify-content: baseline;
-    margin-top: 20px;
+    margin-top: 10px;
+    height: 90%;
 }
 
-.grafico-orcamentos {
+.grafico-orcamentos, .grafico-relatorios {
     display: flex;
-    margin-top: 20px;
     width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
-.grafico-orcamentos canvas {
-    max-width: 100%;  
-    width: 100%;
-    height: auto;
-}
-
-.grafico-relatorios {
-    display: flex;
-    margin-top: 20px;
-    width: 100%;
-}
-
-.grafico-orcamentos canvas {
+.grafico-orcamentos canvas, .grafico-relatorios canvas {
     max-width: 100%;
     width: 100%;
     height: auto;
 }
 
-.grid-orcamento {
-    grid-row: 1 / 2;
-    grid-column: 3 / 4;
-}
-
-.grid-meta {
-    grid-row: 1 / 2;
-    grid-column: 4 / 5;
-}
-
+/* METAS */
 .lista-orc {
-    padding-top: 40px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .linha-orc {
     display: flex;
     flex-direction: row;
+    align-items: center;
     border-bottom: 2px solid var(--cor-fundo);
-    padding: 10px;
+    padding-bottom: 5px;
 }
 
 .linha-orc:last-child {
@@ -173,6 +140,7 @@ body {
 .linha-orc p {
     font-weight: 400;
     font-size: 14px;
+    margin: 0 !important;
 }
 
 .barra-container {
@@ -181,11 +149,10 @@ body {
     background-color: var(--cor-fundo); 
     border-radius: 25px;
     overflow: hidden;
-  }
+}
 
-  .barra-progresso {
+.barra-progresso {
     height: 25px;
-    width: 60px;
     background-color: var(--cor4); 
     border-radius: 25px;
     text-align: center;
@@ -193,7 +160,7 @@ body {
     color: white; 
     font-size: 12px;
     transition: width 0.3s ease;
-  }
+}
 
 .grid-meta button {
     width: 100%;
@@ -202,7 +169,7 @@ body {
     height: 40px;
     border: none;
     background-image: linear-gradient(to bottom right, #8060F6, #6139f2);
-    color: var(--cor3);
+    color: #fff;
     font-weight: 600;
     transition: all 0.2s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -213,20 +180,12 @@ body {
     transform: scale(1.05);
 }
 
-.grid-despesa {
-    grid-row: 2 / 3;
-    grid-column: 1 / 3;
-}
-
-.grid-receita {
-    grid-row: 2 / 3;
-    grid-column: 3 / 5;
-}
-
+/* --- FILTROS (SELECTS E RADIOS) --- */
 .grid-despesa .linha1, 
 .grid-receita .linha1 {
     display: flex;
     flex-direction: row;
+    align-items: center;
     padding-top: 5px;
 }
 
@@ -235,7 +194,8 @@ body {
     border: none;
     background-color: #f7f7f7;
     border-radius: 15px;
-    padding: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
 }
 
 .grid-despesa .linha2,
@@ -243,141 +203,153 @@ body {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
+    align-items: center;
 }
 
+input[type="radio"] { display: none; }
+
+/* Estilo Básico do Botão */
 .grid-despesa .linha2 label,
 .grid-receita .linha2 label {
     border-radius: 20px;
-    padding: 5px 10px 5px 10px;
+    padding: 5px 10px;
     font-family: var(--fonte-principal);
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.2s;
+    background-color: transparent;
+    /* A borda será definida pelas regras específicas abaixo */
 }
 
-input[type="radio"] {
-    display: none;
-}
-
-label {
-    transition: all 0.2s ease;
-}
-
-label:hover {
+.grid-despesa .linha2 label:hover,
+.grid-receita .linha2 label:hover {
     transform: scale(1.05);
 }
 
-label[for="btn-todos"],
-label[for="btn-todos-rec"] {
-    border: 3px solid #A594F9;
-    background-color: transparent;
-}
+/* --- CORES ESPECÍFICAS DOS FILTROS (COM FORÇA EXTRA!) --- */
 
-label[for="btn-fixos"],
-label[for="btn-fixos-rec"] {
-    border: 3px solid var(--cor4);
-    background-color: transparent;
+/* 1. TODAS (Roxo Claro - Cor2) */
+.grid-despesa .linha2 label[for="btn-todos"], 
+.grid-receita .linha2 label[for="btn-todos-rec"] {
+    border: 3px solid var(--cor2); 
+    color: var(--cor4);
 }
-
-label[for="btn-parceladas"],
-label[for="btn-parceladas-rec"] {
-    border: 3px solid var(--cor1);
-    background-color: transparent;
-}
-
-label[for="btn-pontuais"],
-label[for="btn-pontuais-rec"] {
-    border: 3px solid var(--cor3);
-    background-color: transparent;
-}
-
-input[type="radio"]:checked + label[for="btn-todos"],
-input[type="radio"]:checked + label[for="btn-todos-rec"] {
+input[id="btn-todos"]:checked + label, 
+input[id="btn-todos-rec"]:checked + label {
     background-color: var(--cor2);
     color: #fff;
 }
 
-input[type="radio"]:checked + label[for="btn-fixos"],
-input[type="radio"]:checked + label[for="btn-fixos-rec"] {
+/* 2. FIXAS (Azul Escuro - Cor4) */
+.grid-despesa .linha2 label[for="btn-fixos"], 
+.grid-receita .linha2 label[for="btn-fixos-rec"] {
+    border: 3px solid var(--cor4);
+    color: var(--cor4);
+}
+input[id="btn-fixos"]:checked + label, 
+input[id="btn-fixos-rec"]:checked + label {
     background-color: var(--cor4);
     color: #fff;
 }
 
-input[type="radio"]:checked + label[for="btn-parceladas"],
-input[type="radio"]:checked + label[for="btn-parceladas-rec"] {
+/* 3. PARCELADAS (Roxo Vibrante - Cor1) */
+.grid-despesa .linha2 label[for="btn-parceladas"], 
+.grid-receita .linha2 label[for="btn-parceladas-rec"] {
+    border: 3px solid var(--cor1);
+    color: var(--cor4);
+}
+input[id="btn-parceladas"]:checked + label, 
+input[id="btn-parceladas-rec"]:checked + label {
     background-color: var(--cor1);
     color: #fff;
 }
 
-input[type="radio"]:checked + label[for="btn-pontuais"],
-input[type="radio"]:checked + label[for="btn-pontuais-rec"] {
+/* 4. PONTUAIS (Preto/Azul Profundo - Cor3) */
+.grid-despesa .linha2 label[for="btn-pontuais"], 
+.grid-receita .linha2 label[for="btn-pontuais-rec"] {
+    border: 3px solid var(--cor3);
+    color: var(--cor4);
+}
+input[id="btn-pontuais"]:checked + label, 
+input[id="btn-pontuais-rec"]:checked + label {
     background-color: var(--cor3);
     color: #fff;
 }
 
-.grid-despesa .tabela,
-.grid-receita .tabela {
+/* --- TABELAS --- */
+.tabela {
     display: flex;
     flex-direction: column;
-    margin-top: 30px;
+    margin-top: 20px;
     overflow-y: auto;
-    max-height: 150px;
+    max-height: 200px;
+    padding-right: 5px;
 }
 
+/* Estilo de cada linha */
 .grid-despesa .tabela .linha, 
 .grid-receita .tabela .linha {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr;
-    justify-content: space-between;
+    grid-template-columns: 20px 2fr 1fr 1fr; 
+    gap: 10px;
     align-items: center;
     border-top: 1px solid var(--cor-fundo);
     border-bottom: 1px solid var(--cor-fundo);
-    padding: 5px;
+    padding: 8px 5px;
 }
 
+/* BOLINHAS COLORIDAS */
 .grid-despesa .tabela .linha .cor, 
 .grid-receita .tabela .linha .cor {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
 }
 
-.cor1 {
-    background-color: var(--cor1);
-}
+.cor1 { background-color: var(--cor1); } /* Roxo (Pontual) */
+.cor2 { background-color: var(--cor2); } /* Lilás (Fixa) */
+.cor3 { background-color: var(--cor4); } /* Azul Escuro (Parcelada) */
 
-.cor2 {
-    background-color: var(--cor2);
-}
-
-.cor3 {
-    background-color: var(--cor3);
-}
-
+/* Textos da tabela */
 .grid-despesa .tabela .linha .titulo, 
 .grid-receita .tabela .linha .titulo {
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 600;
+    margin: 0 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .grid-despesa .tabela .linha .valor, 
 .grid-receita .tabela .linha .valor {
-    font-size: 12px;
+    font-size: 13px;
+    margin: 0 !important;
+    font-weight: 500;
 }
 
+/* Categoria (Badge) */
 .grid-despesa .tabela .linha .categoria,
 .grid-receita .tabela .linha .categoria {
-    font-size: 8px;
+    font-size: 10px;
     text-transform: uppercase;
     font-weight: 800;
     color: #fff;
     background-color: #1B1239;
-    padding: 5px 10px;
+    padding: 4px 8px;
     border-radius: 5px;
-    max-width: 50px;
-    display: flex;
+    text-align: center;
+    margin: 0 !important;
     justify-self: end;
-    margin-right: 20px;
 }
 
+/* Scrollbar */
+.tabela::-webkit-scrollbar {
+    width: 5px;
+}
+.tabela::-webkit-scrollbar-thumb {
+    background: #8060F6;
+    border-radius: 8px;
+}
