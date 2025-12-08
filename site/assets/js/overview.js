@@ -206,9 +206,6 @@ async function carregarGraficoLinhaOverview() {
 
     createLineChartOverview(diferencaMensal);
 
-    console.log(somaDespesas);
-    console.log(somaReceitas);
-    console.log(diferencaMensal);
 }
 
 function alterarSaldo() {

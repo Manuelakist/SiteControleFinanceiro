@@ -1,0 +1,383 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+:root {
+    --cor1: #8060F6;
+    --cor2: #A594F9;
+    --cor3: #0E131F;
+    --cor4: #1B1239; 
+    --cor-fundo: #EFEFEF;
+    --fonte-principal: 'Inter', sans-serif;
+    --fonte-menu: "Poppins", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--fonte-menu);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: var(--cor-fundo);
+}
+
+.espaco {
+    flex-grow: 1;
+}
+
+.info-box {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 25vh;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.info-box .box {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.info-box .saldo-total {
+    background-image: linear-gradient(to bottom right, #8060F6, #6139f2);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box .vlr-disp {
+    background-image: linear-gradient(to bottom right, #1c2230, #04060b);
+    color: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box .total-gasto {
+    background-image: linear-gradient(to bottom right, #b0a1fe, #8c79e9);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box .alguma-info {
+    background-image: linear-gradient(to bottom right, #231846, #130b2d);
+    color: #fff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box .box .lbl {
+    color: #FFF;
+    font-size: 20px;
+}
+
+.info-box .box .valor {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.vg-tela {
+    width: 100%;
+    min-height: fit-content;
+    background-color: #EFEFEF;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 380px 300px;
+    gap: 20px;
+}
+
+.vg-tela .box {
+    background-color: #FFF;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(54, 54, 54, 0.1);
+}
+
+.link {
+    font-weight: 800;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: absolute;
+}
+
+.link:hover {
+    transform: scale(1.03);
+}
+
+.grid-grafico {
+    grid-row: 1 / 2;
+    grid-column: 1 / 3;
+}
+
+.container-grafico {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    margin-top: 20px;
+}
+
+.grafico-orcamentos {
+    display: flex;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.grafico-orcamentos canvas {
+    max-width: 100%;  
+    width: 100%;
+    height: auto;
+}
+
+.grafico-relatorios {
+    display: flex;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.grafico-orcamentos canvas {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+}
+
+.grid-orcamento {
+    grid-row: 1 / 2;
+    grid-column: 3 / 4;
+}
+
+.grid-meta {
+    grid-row: 1 / 2;
+    grid-column: 4 / 5;
+}
+
+.lista-orc {
+    padding-top: 40px;
+}
+
+.linha-orc {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid var(--cor-fundo);
+    padding: 10px;
+}
+
+.linha-orc:last-child {
+    border-bottom: none;
+}
+
+.linha-orc p {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.barra-container {
+    width: 80px;
+    height: 25px;
+    background-color: var(--cor-fundo); 
+    border-radius: 25px;
+    overflow: hidden;
+  }
+
+  .barra-progresso {
+    height: 25px;
+    width: 60px;
+    background-color: var(--cor4); 
+    border-radius: 25px;
+    text-align: center;
+    line-height: 25px; 
+    color: white; 
+    font-size: 12px;
+    transition: width 0.3s ease;
+  }
+
+.grid-meta button {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+    height: 40px;
+    border: none;
+    background-image: linear-gradient(to bottom right, #8060F6, #6139f2);
+    color: var(--cor3);
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.grid-meta button:hover {
+    transform: scale(1.05);
+}
+
+.grid-despesa {
+    grid-row: 2 / 3;
+    grid-column: 1 / 3;
+}
+
+.grid-receita {
+    grid-row: 2 / 3;
+    grid-column: 3 / 5;
+}
+
+.grid-despesa .linha1, 
+.grid-receita .linha1 {
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+}
+
+.grid-despesa .linha1 select,
+.grid-receita .linha1 select {
+    border: none;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.grid-despesa .linha2,
+.grid-receita .linha2 {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.grid-despesa .linha2 label,
+.grid-receita .linha2 label {
+    border-radius: 20px;
+    padding: 5px 10px 5px 10px;
+    font-family: var(--fonte-principal);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+label {
+    transition: all 0.2s ease;
+}
+
+label:hover {
+    transform: scale(1.05);
+}
+
+label[for="btn-todos"],
+label[for="btn-todos-rec"] {
+    border: 3px solid #A594F9;
+    background-color: transparent;
+}
+
+label[for="btn-fixos"],
+label[for="btn-fixos-rec"] {
+    border: 3px solid var(--cor4);
+    background-color: transparent;
+}
+
+label[for="btn-parceladas"],
+label[for="btn-parceladas-rec"] {
+    border: 3px solid var(--cor1);
+    background-color: transparent;
+}
+
+label[for="btn-pontuais"],
+label[for="btn-pontuais-rec"] {
+    border: 3px solid var(--cor3);
+    background-color: transparent;
+}
+
+input[type="radio"]:checked + label[for="btn-todos"],
+input[type="radio"]:checked + label[for="btn-todos-rec"] {
+    background-color: var(--cor2);
+    color: #fff;
+}
+
+input[type="radio"]:checked + label[for="btn-fixos"],
+input[type="radio"]:checked + label[for="btn-fixos-rec"] {
+    background-color: var(--cor4);
+    color: #fff;
+}
+
+input[type="radio"]:checked + label[for="btn-parceladas"],
+input[type="radio"]:checked + label[for="btn-parceladas-rec"] {
+    background-color: var(--cor1);
+    color: #fff;
+}
+
+input[type="radio"]:checked + label[for="btn-pontuais"],
+input[type="radio"]:checked + label[for="btn-pontuais-rec"] {
+    background-color: var(--cor3);
+    color: #fff;
+}
+
+.grid-despesa .tabela,
+.grid-receita .tabela {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    overflow-y: auto;
+    max-height: 150px;
+}
+
+.grid-despesa .tabela .linha, 
+.grid-receita .tabela .linha {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--cor-fundo);
+    border-bottom: 1px solid var(--cor-fundo);
+    padding: 5px;
+}
+
+.grid-despesa .tabela .linha .cor, 
+.grid-receita .tabela .linha .cor {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.cor1 {
+    background-color: var(--cor1);
+}
+
+.cor2 {
+    background-color: var(--cor2);
+}
+
+.cor3 {
+    background-color: var(--cor3);
+}
+
+.grid-despesa .tabela .linha .titulo, 
+.grid-receita .tabela .linha .titulo {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.grid-despesa .tabela .linha .valor, 
+.grid-receita .tabela .linha .valor {
+    font-size: 12px;
+}
+
+.grid-despesa .tabela .linha .categoria,
+.grid-receita .tabela .linha .categoria {
+    font-size: 8px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #fff;
+    background-color: #1B1239;
+    padding: 5px 10px;
+    border-radius: 5px;
+    max-width: 50px;
+    display: flex;
+    justify-self: end;
+    margin-right: 20px;
+}
+

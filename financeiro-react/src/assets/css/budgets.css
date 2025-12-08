@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+:root {
+    --cor1: #8060F6;
+    --cor2: #A594F9;
+    --cor3: #0E131F;
+    --cor4: #1B1239; 
+    --cor-fundo: #EFEFEF;
+    --fonte-principal: 'Inter', sans-serif;
+    --fonte-menu: "Poppins", sans-serif;
+}
+
+.espaco {
+    flex-grow: 1;
+}
+
+.conteudo {
+    display: flex;
+    flex-direction: column;
+}
+
+.cabecalho {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.coluna {
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--cor2);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.box .titulo {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.box .valor {
+    font-size: 30px;
+    font-weight: 700;
+    align-self: flex-end;
+} 
+
+.caixa-1 {
+    background-image: linear-gradient(to bottom right, #8060F6, #6139f2);
+}
+
+.caixa-2 {
+    background-image: linear-gradient(to bottom right, #1c2230, #04060b);
+    color: #FFF;
+}
+
+.caixa-3 {
+    background-image: linear-gradient(to bottom right, #231846, #130b2d);
+    color: #FFF;
+}
+
+.caixa-4 {
+    background-image: linear-gradient(to bottom right, #b0a1fe, #8c79e9);
+}
+
+.lista {
+    background-color: #FFF;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    margin-top: 30px;
+    padding: 30px 20px 30px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}   
+
+.cabecalho-lista {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr auto;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--cor4);
+    margin-bottom: 40px;
+}
+
+.cbc-barra {
+    justify-self: end;
+}
+
+#tabela-orc .linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr auto;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 20px 10px 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--cor-fundo);
+}
+
+#tabela-orc .linha:last-child {
+    border: none;
+}
+
+.barra-container {
+    position: relative;
+    width: 200px;
+    height: 30px;
+    background-color: var(--cor-fundo);
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.barra-progresso {
+    height: 100%;
+    background-color: var(--cor1);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+    transition: width 0.3s ease;
+}
+
+.porcentagem-texto {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.barra-container.pequena .porcentagem-texto {
+    left: 100%; /* Move o texto para fora da barra */
+    margin-left: 5px; /* Ajuste para distanciar o texto da barra */
+    color: var(--cor4)
+}
+
+
+
+#tabela-orc .linha .acoes {
+    justify-self: end;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: width 0.8s ease, opacity 0.8s ease;
+    align-items: end;
+}
+
+#tabela-orc .linha:hover .acoes {
+    width: 80px;
+    opacity: 1;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+#tabela-orc .linha button {
+    border: none;
+    background-color: #fff;
+    cursor: pointer;
+    transition: 0.2s all;
+}
+
+#tabela-orc .linha button:hover {
+    transform: scale(1.05);
+}
+
+#tabela-orc .linha .alt i {
+    color: #e0d100;
+    font-size: 20px;
+}
+
+#tabela-orc .linha .delete i {
+    color: #970019;
+    font-size: 20px;
+}

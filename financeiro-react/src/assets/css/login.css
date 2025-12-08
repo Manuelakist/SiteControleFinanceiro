@@ -1,0 +1,208 @@
+body {
+    display: flex;
+    flex-direction: row;
+    font-family: "Karla", sans-serif;
+    min-height: 100vh;
+}
+
+.espaco {
+    flex-grow: 1;
+}
+
+.login .login-tela {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45vw;
+    height: 100vh;
+}
+
+.container-login {
+    background-color: white;
+    height: 70vh;
+    width: 70%;
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.login .logo {
+    display: flex;
+    width: 20vw;
+}
+
+.login .texto-login {
+    font-size: 30px;
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.login .form-control {
+    border: 1px solid #d5dae2;
+    padding: 15px 25px;
+    margin-bottom: 1vh;
+    height: 6vh;
+    font-size: 13px;
+    line-height: 15;
+    font-weight: normal;
+}
+
+.login form button {
+    height: 6vh;
+    background-color: #8060F6;
+    border-radius: 4px;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #fff;
+    border: none;
+    transition: all 0.2s;
+}
+
+.login form button:hover {
+    border: 1px solid #1B1239;
+    background-color: transparent;
+    color: #1B1239;
+}
+
+.login .esq-senha {
+    font-size: 16px;
+    color: #919aa3;
+    margin-top: 3vh;
+}
+
+.login .linha-registro {
+    display: flex;
+    flex-direction: row;
+}
+
+.login .login-footer {
+    font-size: 18px;
+    color: #1B1239;
+    margin-top: 1vh;
+}
+
+.login-registro {
+    background-color: #8060F6;
+    width: 55%;
+    height: 100vh;
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    left: 45%;
+    transition: left 0.1s ease-in-out;
+}
+
+.login-registro img {
+    width: 100%;
+    height: 100%;
+}
+
+.login-registro.ativo {
+    left: 0;
+}
+
+.registro .registro-tela {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 45vw;
+    height: 100vh;
+}
+
+.container-registro {
+    background-color: white;
+    height: 80vh;
+    width: 70%;
+    padding: 5vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.registro .logo {
+    display: flex;
+    width: 20vw;
+}
+
+.registro .texto-registro {
+    font-size: 30px;
+}
+
+.registro form {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
+.registro .form-control {
+    border: 1px solid #d5dae2;
+    padding: 15px 25px;
+    margin-bottom: 1vh;
+    height: 6vh;
+    font-size: 13px;
+    line-height: 15;
+    font-weight: normal;
+}
+
+.registro form button {
+    height: 6vh;
+    background-color: #8060F6;
+    border-radius: 4px;
+    font-size: 17px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #fff;
+    border: none;
+    transition: all 0.2s;
+}
+
+.registro form button:hover {
+    border: 1px solid #1B1239;
+    background-color: transparent;
+    color: #1B1239;
+}
+
+.registro .esq-senha {
+    font-size: 16px;
+    color: #919aa3;
+    margin-top: 3vh;
+}
+
+.registro .linha-registro {
+    display: flex;
+    flex-direction: row;
+}
+
+.registro .registro-footer {
+    font-size: 18px;
+    color: #1B1239;
+    margin-top: 2vh;
+}
+
+#root {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+    font-family: "Karla", sans-serif;
+    position: relative;
+    overflow-x: hidden; 
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.logo-img {
+    width: 100%;
+    height: auto;
+}

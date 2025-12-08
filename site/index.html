@@ -1,29 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela Principal</title>
-    <link rel="icon" href="/assets/img/logo.png" type="image/png">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@latest/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-    <script src="assets/js/charts.js" defer></script>
-    <script src="assets/js/overview.js" defer></script>
-    <script src="assets/js/cashflow.js" defer></script>
-    <script src="assets/js/budgets.js" defer></script>
-    <script src="assets/js/goals.js" defer></script>
-    <script src="assets/js/reports.js" defer></script>
-    <script src="assets/js/util.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/login.css">
 </head>
+
 <body>
-    <div class="sidebar"></div> 
-    <div class="container">
-        <div class="header"></div> 
 
-        <div class="main-content" id="main-content" idConta="1" data-page=""></div>
+  <div class="login-registro" id="overlay"><img src="assets/img/threechart.png" alt=""></div>
+
+  <div class="login">
+    <div class="login-tela">
+      <div class="container-login">
+        <div class="logo">
+          <img src="/assets/img/aaaaa.svg" alt="logo" class="logo">
+        </div>
+        <p class="texto-login">Faça login na sua conta</p>
+        <form id="loginForm" action="#!">
+          <input class="form-control" id="formEmail" type="text" placeholder="Endereço de email">
+          <input class="form-control" id="formSenha" type="password" placeholder="**********">
+          <button>Login</button>
+        </form>
+        <a class="esq-senha" href="#!">Esqueceu a senha?</a>
+        <p class="login-footer">Ainda não tem uma conta? <a href="#!" class="text-reset" id="ir-registro">Registre-se aqui</a></p>
+      </div>
     </div>
+  </div>
 
-    <script src="../assets/js/dashboard.js"></script> 
+  <div class="espaco"></div>
+
+  <div class="registro">
+    <div class="registro-tela">
+      <div class="container-registro">
+        <div class="logo">
+          <img src="/assets/img/aaaaa.svg" alt="logo" class="logo">
+        </div>
+        <p class="texto-registro">Crie sua conta</p>
+        <form action="">
+          <input class="form-control" type="text" placeholder="Nome completo">
+          <input class="form-control" type="text" placeholder="Endereço de email">
+          <input class="form-control" type="password" placeholder="**********">
+          <button>Cadastrar</button>
+        </form>
+        <p class="registro-footer">Já tem uma conta? <a href="#!" class="text-reset" id="ir-login">Faça login aqui</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/login.js"></script>
 </body>
+
 </html>
