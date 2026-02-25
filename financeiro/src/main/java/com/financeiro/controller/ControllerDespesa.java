@@ -22,7 +22,6 @@ import com.financeiro.service.DespesaService;
 
 @RestController
 @RequestMapping("/despesa")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ControllerDespesa {
     
     @Autowired

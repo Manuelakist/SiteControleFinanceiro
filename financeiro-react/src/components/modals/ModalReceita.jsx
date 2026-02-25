@@ -1,14 +1,10 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { despesaService } from '../../services/despesa.service';
+import { receitaService } from '../../services/receita.service';
 import { categoriaService } from '../../services/categoria.service';
 import '../../assets/css/components.css';
 
-/**
- * Componente modal para registo de despesas.
- * Ajustado para garantir a integridade do parâmetro 'tempo' exigido pelo DespesaService.java.
- */
-export function ModalDespesa({ isOpen, onClose, idConta, onDespesaAdicionada }) {
+export function ModalReceita({ isOpen, onClose, idConta, onReceitaAdicionada }) {
     if (!isOpen) return null;
 
     const [form, setForm] = useState({
@@ -26,20 +22,18 @@ export function ModalDespesa({ isOpen, onClose, idConta, onDespesaAdicionada }) 
     const [erro, setErro] = useState('');
 
     useEffect(() => {
-        if (isOpen && idConta) {
-            carregarCategorias();
-        }
+        if (isOpen && idConta) carregarCategorias();
     }, [isOpen, idConta]);
 
     const carregarCategorias = async () => {
         try {
-            const data = await categoriaService.listarCategoriasDespesa(idConta);
+            const data = await categoriaService.listarCategoriasReceita(idConta);
             setCategorias(data || []);
-            if (data && data.length > 0 && !form.categoriaId) {
+            if (data?.length > 0 && !form.categoriaId) {
                 setForm(prev => ({ ...prev, categoriaId: data[0].id }));
             }
         } catch (error) {
-            setErro('Falha na comunicação com a API de categorias.');
+            setErro('Erro ao carregar categorias.');
         }
     };
 
@@ -57,49 +51,29 @@ export function ModalDespesa({ isOpen, onClose, idConta, onDespesaAdicionada }) 
             let catIdFinal = form.categoriaId;
 
             if (form.categoriaId === 'NOVA_CATEGORIA') {
-                if (!form.novaCategoriaNome.trim()) {
-                    throw new Error('O nome da nova categoria é obrigatório.');
-                }
-                const respostaCat = await categoriaService.adicionarCategoriaDespesa({
+                if (!form.novaCategoriaNome.trim()) throw new Error('Nome da categoria obrigatório.');
+                const novaCat = await categoriaService.adicionarCategoriaReceita({
                     nome: form.novaCategoriaNome,
-                    contaDTO: { id: Number(idConta) }
+                    contaDTO: { id: idConta } // Mapeamento correto para o DTO Java
                 });
-                catIdFinal = respostaCat.data ? respostaCat.data.id : respostaCat.id;
+                catIdFinal = novaCat.id;
             }
-
-            /**
-             * Lógica estrutural do parâmetro tempo:
-             * PONTUAL: Tempo = 1 (Garante 1 iteração no loop do Java)
-             * FIXA: Tempo = 12 (Projeta a despesa para 12 meses, comportamento padrão para fixas)
-             * PARCELADA: Tempo = valor escolhido pelo utilizador
-             */
-            let tempoCalculado = 1;
-            if (form.tipo === 'FIXA') tempoCalculado = 12;
-            if (form.tipo === 'PARCELADA') tempoCalculado = parseInt(form.tempo, 10);
 
             const payload = {
-                descricao: form.descricao.trim(),
-                valor: Number(parseFloat(form.valor).toFixed(2)),
-                data: form.data, 
-                tipo: form.tipo.toLowerCase(),
-                tempo: tempoCalculado,
-                contaDTO: { id: Number(idConta) },
-                categoriaDespesaDTO: { id: Number(catIdFinal) }
+                descricao: form.descricao,
+                valor: parseFloat(form.valor),
+                data: form.data,
+                tipo: form.tipo,
+                tempo: form.tipo === 'PARCELADA' ? parseInt(form.tempo) : 0,
+                contaDTO: { id: idConta },
+                categoriaReceitaDTO: { id: parseInt(catIdFinal) }
             };
 
-            await despesaService.adicionarDespesa(payload);
-            
-            if (onDespesaAdicionada) {
-                onDespesaAdicionada();
-            }
+            await receitaService.adicionarReceita(payload);
+            if (onReceitaAdicionada) onReceitaAdicionada();
             onClose();
-
         } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setErro(`Requisição inválida (400). Verifique a consistência dos dados numéricos.`);
-            } else {
-                setErro(error.message || 'Erro interno na comunicação com a API.');
-            }
+            setErro(error.message || 'Erro ao processar receita.');
         } finally {
             setLoading(false);
         }
@@ -109,17 +83,14 @@ export function ModalDespesa({ isOpen, onClose, idConta, onDespesaAdicionada }) 
         <div className="modal-overlay" onClick={onClose}>
             <div className="adc-conteudo" onClick={(e) => e.stopPropagation()}>
                 <span className="close-btn" onClick={onClose}>&times;</span>
-                <h3>Nova Despesa</h3>
-                
+                <h3>Nova Receita</h3>
                 <form onSubmit={handleSubmit}>
-                    {erro && <p style={{ color: '#d9534f', textAlign: 'center', fontSize: '13px', marginBottom: '10px', fontWeight: 'bold' }}>{erro}</p>}
-                    
+                    {erro && <p className="erro-form" style={{ color: '#d9534f', textAlign: 'center' }}>{erro}</p>}
                     <div className="inputs">
                         <div className="input-desc linha">
                             <i className="material-icons">edit</i>
                             <input type="text" name="descricao" placeholder="descrição" value={form.descricao} onChange={handleChange} required />
                         </div>
-
                         <div className="linha-valor">
                             <div className="input-valor linha">
                                 <i className="material-icons">attach_money</i>
@@ -130,50 +101,39 @@ export function ModalDespesa({ isOpen, onClose, idConta, onDespesaAdicionada }) 
                                 <i className="material-icons">category</i>
                                 <select name="categoriaId" value={form.categoriaId} onChange={handleChange} required>
                                     <option value="" disabled>categoria</option>
-                                    {categorias.map(cat => (
-                                        <option key={cat.id} value={cat.id}>{cat.nome}</option>
-                                    ))}
-                                    <option value="NOVA_CATEGORIA">+ criar nova categoria...</option>
+                                    {categorias.map(cat => (<option key={cat.id} value={cat.id}>{cat.nome}</option>))}
+                                    <option value="NOVA_CATEGORIA">+ nova categoria...</option>
                                 </select>
                             </div>
                         </div>
-
                         {form.categoriaId === 'NOVA_CATEGORIA' && (
                             <div className="input-nova-cat linha">
                                 <i className="material-icons">add_circle</i>
                                 <input type="text" name="novaCategoriaNome" placeholder="nome da nova categoria" value={form.novaCategoriaNome} onChange={handleChange} required />
                             </div>
                         )}
-
                         <div className="input-tipo linha" style={{borderBottom: 'none'}}>
                             <div className="radio-tipo">
-                                <input type="radio" id="pontual-des" name="tipo" value="PONTUAL" checked={form.tipo === 'PONTUAL'} onChange={handleChange} />
-                                <label htmlFor="pontual-des">pontual</label>
-
-                                <input type="radio" id="fixa-des" name="tipo" value="FIXA" checked={form.tipo === 'FIXA'} onChange={handleChange} />
-                                <label htmlFor="fixa-des">fixa</label>
-
-                                <input type="radio" id="parcelada-des" name="tipo" value="PARCELADA" checked={form.tipo === 'PARCELADA'} onChange={handleChange} />
-                                <label htmlFor="parcelada-des">parcelada</label>
+                                {['PONTUAL', 'FIXA', 'PARCELADA'].map(t => (
+                                    <span key={t}>
+                                        <input type="radio" id={`${t}-rec`} name="tipo" value={t} checked={form.tipo === t} onChange={handleChange} />
+                                        <label htmlFor={`${t}-rec`}>{t.toLowerCase()}</label>
+                                    </span>
+                                ))}
                             </div>
                         </div>
-
                         {form.tipo === 'PARCELADA' && (
                             <div className="input-parcelas linha">
                                 <i className="material-icons">reorder</i>
-                                <input type="number" name="tempo" placeholder="nº de parcelas" min="2" value={form.tempo} onChange={handleChange} required />
+                                <input type="number" name="tempo" placeholder="nº parcelas" min="2" value={form.tempo} onChange={handleChange} required />
                             </div>
                         )}
-
                         <div className="input-data linha">
                             <i className="material-icons">calendar_today</i>
                             <input type="date" name="data" value={form.data} onChange={handleChange} required />
                         </div>
                     </div>
-
-                    <button type="submit" className="btn-salvar" disabled={loading}>
-                        {loading ? 'a processar...' : 'salvar'}
-                    </button>
+                    <button type="submit" className="btn-salvar" disabled={loading}>{loading ? 'processando...' : 'salvar'}</button>
                 </form>
             </div>
         </div>,

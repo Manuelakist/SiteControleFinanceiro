@@ -20,7 +20,6 @@ import com.financeiro.service.OrcamentoService;
 
 @RestController
 @RequestMapping("/orcamento")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ControllerOrcamento {
     
     @Autowired

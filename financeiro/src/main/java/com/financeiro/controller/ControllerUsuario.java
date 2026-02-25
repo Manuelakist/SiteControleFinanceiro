@@ -17,7 +17,6 @@ import com.financeiro.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuario")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ControllerUsuario {
 
     @Autowired

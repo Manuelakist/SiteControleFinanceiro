@@ -20,7 +20,6 @@ import com.financeiro.service.MetaService;
 
 @RestController
 @RequestMapping("/meta")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ControllerMeta {
     
     @Autowired

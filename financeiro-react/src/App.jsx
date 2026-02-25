@@ -1,25 +1,27 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Login } from "./components/Login";
-import { Layout } from "./components/Layout";
-import { Overview } from "./pages/Overview"; // <--- Importe a nova página
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Login } from './pages/Login';
+import { Overview } from './pages/Dashboard/Overview';
+import { FluxoCaixa } from './pages/FluxoCaixa/FluxoCaixa';
+import { ProtectedRoute } from './components/ProtectedRoute';
+import { Layout } from './components/Layout';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        {/* Rota Pública */}
-        <Route path="/" element={<Login />} />
+/**
+ * Configuração central de rotas da aplicação.
+ * Define acessos públicos e privados protegidos pelo ProtectedRoute.
+ */
+export function App() {
+    return (
+        <Router>
+            <Routes>
+                {/* Rota pública */}
+                <Route path="/" element={<Login />} />
 
-        {/* Rotas Protegidas (Dashboard) */}
-        <Route element={<Layout />}>
-            {/* Use o componente Overview aqui */}
-            <Route path="/dashboard" element={<Overview />} />
-        </Route>
-
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </BrowserRouter>
-  );
+                {/* Rotas protegidas que compartilham o mesmo Layout (Sidebar/Header) */}
+                <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+                    <Route path="/dashboard" element={<Overview />} />
+                    <Route path="/fluxo-caixa" element={<FluxoCaixa />} />
+                </Route>
+            </Routes>
+        </Router>
+    );
 }
-
-export default App;

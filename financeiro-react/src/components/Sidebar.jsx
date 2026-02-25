@@ -1,14 +1,30 @@
-// src/components/Sidebar.jsx
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { authService } from '../services/auth.service';
 import '../assets/css/components.css';
 import logoImg from '../assets/img/logo.png';
 
+/**
+ * Componente de navegação lateral.
+ * Gere o estado ativo dos links baseado na rota atual e processa o encerramento da sessão.
+ */
 export function Sidebar() {
     const location = useLocation();
+    const navigate = useNavigate();
 
-    // Função para manter a classe 'ativo' funcionando
+    /**
+     * Define a classe CSS baseada na correspondência com a rota ativa.
+     * @param {string} path - Caminho da rota para validação.
+     */
     const getLinkClass = (path) => {
         return location.pathname === path ? 'ativo' : '';
+    };
+
+    /**
+     * Executa o processo de logout e redireciona para a página inicial.
+     */
+    const handleLogout = () => {
+        authService.logout();
+        navigate('/');
     };
 
     return (
@@ -21,6 +37,7 @@ export function Sidebar() {
                         <p className="sub">CONTROLE FINANCEIRO</p>
                     </div>
                 </div>
+                
                 <ul className="sidebar">
                     <li className="item">
                         <Link to="/dashboard" className={getLinkClass('/dashboard')}>
@@ -29,7 +46,7 @@ export function Sidebar() {
                         </Link>
                     </li>
                     <li className="item">
-                        <Link to="/cashflow" className={getLinkClass('/cashflow')}>
+                        <Link to="/fluxo-caixa" className={getLinkClass('/fluxo-caixa')}>
                             <i className="material-icons">shopping_cart</i>
                             <span>Fluxo de Caixa</span>
                         </Link>
@@ -54,11 +71,9 @@ export function Sidebar() {
                     </li>
                 </ul>
             </div>
+
             <div className="logout">
-                <button id="logout-btn" onClick={() => {
-                    localStorage.removeItem('usuario_logado');
-                    window.location.href = '/';
-                }}>
+                <button id="logout-btn" onClick={handleLogout}>
                     <i className="fa-solid fa-arrow-right-from-bracket"></i>
                     <span>Sair</span>
                 </button>

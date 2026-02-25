@@ -1,19 +1,35 @@
 import { api } from './api';
 
+/**
+ * Camada de serviço para persistência e recuperação de dados de despesas.
+ */
 export const despesaService = {
-    // Busca a soma das despesas de um período
-    async getSoma(idConta, dataInicial, dataFinal) {
-        // O backend pode retornar null se não houver despesas, então tratamos com || 0
-        const valor = await api.get(`/despesa/soma/${idConta}?dataInicial=${dataInicial}&dataFinal=${dataFinal}`);
-        return valor || 0;
+    
+    /**
+     * Persiste uma nova despesa no sistema.
+     * @param {Object} despesaDTO 
+     */
+    async adicionarDespesa(despesaDTO) {
+        return await api.post('/despesa', despesaDTO);
     },
 
-    // Lista todas as despesas do período (para a tabela)
-    async listarPorConta(idConta, dataInicial, dataFinal) {
-        return await api.get(`/despesa/conta/${idConta}?dataInicial=${dataInicial}&dataFinal=${dataFinal}`);
+    /**
+     * Recupera o somatório total de despesas por conta e período.
+     * @param {number} idConta 
+     * @param {string} dataInicio 
+     * @param {string} dataFim 
+     */
+    async getSoma(idConta, dataInicio, dataFim) {
+        return await api.get(`/despesa/soma/${idConta}?dataInicial=${dataInicio}&dataFinal=${dataFim}`);
     },
 
-    async criar(despesaDTO) {
-        return await api.post('/despesa', despesaDTO); 
+    /**
+     * Recupera a listagem de despesas por conta e período.
+     * @param {number} idConta 
+     * @param {string} dataInicio 
+     * @param {string} dataFim 
+     */
+    async listarPorConta(idConta, dataInicio, dataFim) {
+        return await api.get(`/despesa/conta/${idConta}?dataInicial=${dataInicio}&dataFinal=${dataFim}`);
     }
 };
