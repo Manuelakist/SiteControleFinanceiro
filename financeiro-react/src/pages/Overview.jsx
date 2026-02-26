@@ -7,10 +7,6 @@ import { despesaService } from '../services/despesa.service';
 import { receitaService } from '../services/receita.service';
 import { categoriaService } from '../services/categoria.service';
 
-/**
- * Componente principal do Dashboard financeiro.
- * Apresenta o resumo de saldos, despesas e receitas da conta ativa do utilizador.
- */
 export function Overview() {
     
     const [resumo, setResumo] = useState({ saldo: 0, disponivel: 0, gasto: 0, receita: 0 });
@@ -117,12 +113,10 @@ export function Overview() {
 
     if (erro) {
         return (
-            <div className="vg" style={{ padding: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+            <div className="vg">
                 <h3 style={{ color: '#d9534f' }}>Aviso de Sistema</h3>
                 <p>{erro}</p>
-                <button onClick={() => window.location.reload()} style={{ padding: '8px 16px', marginTop: '10px', cursor: 'pointer' }}>
-                    Atualizar Página
-                </button>
+                <button onClick={() => window.location.reload()}>Atualizar Página</button>
             </div>
         );
     }
@@ -133,46 +127,46 @@ export function Overview() {
                 <div className="box saldo-total">
                     <p className="lbl">Saldo total</p>
                     <div className="espaco"></div>
-                    <p className="valor">{loading ? 'A carregar...' : formatarMoeda(resumo.saldo)}</p>
+                    <p className="valor">{loading ? '...' : formatarMoeda(resumo.saldo)}</p>
                 </div>
                 <div className="box vlr-disp">
                     <p className="lbl">Valor disponível</p>
                     <div className="espaco"></div>
-                    <p className="valor">{loading ? 'A carregar...' : formatarMoeda(resumo.disponivel)}</p>
+                    <p className="valor">{loading ? '...' : formatarMoeda(resumo.disponivel)}</p>
                 </div>
                 <div className="box total-gasto">
                     <p className="lbl">Total gasto</p>
                     <div className="espaco"></div>
-                    <p className="valor">{loading ? 'A carregar...' : formatarMoeda(resumo.gasto)}</p>
+                    <p className="valor">{loading ? '...' : formatarMoeda(resumo.gasto)}</p>
                 </div>
                 <div className="box alguma-info">
                     <p className="lbl">Receita total</p>
                     <div className="espaco"></div>
-                    <p className="valor">{loading ? 'A carregar...' : formatarMoeda(resumo.receita)}</p>
+                    <p className="valor">{loading ? '...' : formatarMoeda(resumo.receita)}</p>
                 </div>
             </div>
 
             <div className="vg-tela">
                 <div className="box grid-grafico">
-                    <p className="link" data-page="reports">Relatórios</p>
+                    <p className="link">Relatórios</p>
                     <div className="container-grafico">
                         <div className="grafico-relatorios">
-                            <p style={{marginTop: '50px', textAlign: 'center', color: '#ccc'}}>Gráfico em breve</p>
+                            <p style={{ margin: 0, marginTop: '50px', textAlign: 'center', color: '#ccc' }}>Gráfico em breve</p>
                         </div>
                     </div>
                 </div>
                 <div className="box grid-orcamento">
-                    <p className="link" data-page="budgets">Orçamentos</p>
+                    <p className="link">Orçamentos</p>
                     <div className="container-grafico">
                         <div className="grafico-orcamentos">
-                             <p style={{marginTop: '50px', textAlign: 'center', color: '#ccc'}}>Gráfico em breve</p>
+                             <p style={{ margin: 0, marginTop: '50px', textAlign: 'center', color: '#ccc' }}>Gráfico em breve</p>
                         </div>
                     </div>
                 </div>
                 <div className="box grid-meta">
-                    <p className="link" data-page="goals">Metas</p>
+                    <p className="link">Metas</p>
                      <div className="lista-orc">
-                        <p style={{textAlign: 'center', color: '#ccc'}}>Em breve</p>
+                        <p style={{ margin: 0, textAlign: 'center', color: '#ccc' }}>Em breve</p>
                     </div>
                     <button>Ver Detalhes</button>
                 </div>
@@ -211,10 +205,10 @@ export function Overview() {
                                checked={tipoDespesa === 'pontual'} onChange={() => setTipoDespesa('pontual')} disabled={loading} />
                         <label htmlFor="btn-pontuais">Pontuais</label>
                     </div>
-                    {/* Implementação de Scroll Vertical para evitar overflow */}
-                    <div className="tabela" style={{ overflowY: 'auto', maxHeight: '250px', paddingRight: '5px' }}>
-                        {loading ? <p style={{textAlign: 'center', padding: '1rem'}}>A carregar despesas...</p> : 
-                         getDespesasFiltradas().length === 0 ? <p style={{textAlign: 'center', color: '#999', padding: '1rem'}}>Nenhuma despesa encontrada para os filtros selecionados.</p> :
+                    
+                    <div className="tabela">
+                        {loading ? <p style={{ margin: 0, textAlign: 'center', padding: '1rem' }}>A carregar despesas...</p> : 
+                         getDespesasFiltradas().length === 0 ? <p style={{ margin: 0, textAlign: 'center', color: '#999', padding: '1rem' }}>Nenhuma despesa encontrada.</p> :
                          getDespesasFiltradas().map(despesa => (
                             <div className="linha" key={despesa.id}>
                                 <div className={`cor ${getCorTipo(despesa.tipo)}`}></div>
@@ -262,10 +256,10 @@ export function Overview() {
                                checked={tipoReceita === 'pontual'} onChange={() => setTipoReceita('pontual')} disabled={loading} />
                         <label htmlFor="btn-pontuais-rec">Pontuais</label>
                     </div>
-                    {/* Implementação de Scroll Vertical para evitar overflow */}
-                    <div className="tabela" style={{ overflowY: 'auto', maxHeight: '250px', paddingRight: '5px' }}>
-                        {loading ? <p style={{textAlign: 'center', padding: '1rem'}}>A carregar receitas...</p> : 
-                         getReceitasFiltradas().length === 0 ? <p style={{textAlign: 'center', color: '#999', padding: '1rem'}}>Nenhuma receita encontrada para os filtros selecionados.</p> :
+
+                    <div className="tabela">
+                        {loading ? <p style={{ margin: 0, textAlign: 'center', padding: '1rem' }}>A carregar receitas...</p> : 
+                         getReceitasFiltradas().length === 0 ? <p style={{ margin: 0, textAlign: 'center', color: '#999', padding: '1rem' }}>Nenhuma receita encontrada.</p> :
                          getReceitasFiltradas().map(receita => (
                             <div className="linha" key={receita.id}>
                                 <div className={`cor ${getCorTipo(receita.tipo)}`}></div>

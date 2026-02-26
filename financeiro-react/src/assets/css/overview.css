@@ -1,5 +1,3 @@
-/* src/assets/css/overview.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 :root {
@@ -33,7 +31,6 @@ body {
     min-height: 10px;
 }
 
-/* --- CARDS DO TOPO --- */
 .info-box {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -60,7 +57,6 @@ body {
 .info-box .box .lbl { color: #FFF; font-size: 20px; font-weight: 400; }
 .info-box .box .valor { font-size: 30px; font-weight: 700; } 
 
-/* --- GRID PRINCIPAL --- */
 .vg-tela {
     width: 100%;
     min-height: fit-content;
@@ -130,7 +126,6 @@ body {
     height: auto;
 }
 
-/* --- METAS --- */
 .lista-orc { padding-top: 20px; display: flex; flex-direction: column; gap: 15px; }
 .linha-orc { display: flex; flex-direction: row; align-items: center; border-bottom: 2px solid var(--cor-fundo); padding-bottom: 5px; }
 .linha-orc:last-child { border-bottom: none; }
@@ -145,7 +140,6 @@ body {
 }
 .grid-meta button:hover { transform: scale(1.05); }
 
-/* --- FILTROS --- */
 .grid-despesa .linha1, .grid-receita .linha1 { display: flex; flex-direction: row; align-items: center; padding-top: 5px; }
 .grid-despesa .linha1 select, .grid-receita .linha1 select {
     border: none; background-color: #f7f7f7; border-radius: 15px; padding: 5px 10px; cursor: pointer;
@@ -192,15 +186,14 @@ input[id="btn-pontuais-rec"]:checked + label {
     background-color: var(--cor3) !important; color: #fff !important; opacity: 1;
 }
 
-/* --- TABELAS --- */
 .tabela { 
     display: flex; 
     flex-direction: column; 
-    margin-top: 20px; 
+    margin-top: 5px; 
     overflow-y: auto; 
     flex: 1; 
     min-height: 0; 
-    padding-right: 5px; 
+    justify-content: flex-start !important;
 }
 
 .grid-despesa .tabela .linha, .grid-receita .tabela .linha {
@@ -228,7 +221,6 @@ input[id="btn-pontuais-rec"]:checked + label {
     padding: 4px 8px; border-radius: 5px; text-align: center; margin: 0 !important; justify-self: end;
 }
 
-/* --- PERSONALIZAÇÃO DA BARRA DE ROLAGEM --- */
 .tabela::-webkit-scrollbar { 
     width: 6px; 
 }
