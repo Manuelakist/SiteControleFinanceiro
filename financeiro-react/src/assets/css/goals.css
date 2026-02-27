@@ -1,39 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 #pagina-metas {
     width: 100%;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 #pagina-metas .cabecalho-metas {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 
 #pagina-metas .titulo {
     font-size: 24px;
     font-weight: 800;
     color: var(--cor4);
-}
-
-#pagina-metas .btn-nova-meta {
-    background-color: var(--cor1);
-    color: #fff;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
-
-#pagina-metas .btn-nova-meta:hover {
-    transform: scale(1.05);
+    margin: 0;
 }
 
 #pagina-metas .grid-metas {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 25px;
 }
 
@@ -44,82 +33,307 @@
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s;
+    min-height: 250px;
 }
 
-#pagina-metas .info-meta {
+#pagina-metas .card-meta:hover {
+    transform: translateY(-5px);
+}
+
+#pagina-metas .card-meta.add-card {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ddd;
+    background: transparent !important;
+    box-shadow: none;
+}
+
+#pagina-metas .card-meta.add-card i {
+    font-size: 50px;
+    color: var(--cor4);
 }
 
 #pagina-metas .nome-meta {
     font-size: 18px;
     font-weight: 700;
     color: var(--cor3);
-}
-
-#pagina-metas .detalhes-valores {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 #pagina-metas .valor-atual {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
     color: var(--cor1);
+    margin: 0;
 }
 
 #pagina-metas .valor-alvo {
     font-size: 13px;
     color: #888;
+    margin-top: 5px;
 }
 
 #pagina-metas .barra-externa {
     width: 100%;
-    height: 14px;
+    height: 12px;
     background-color: #f0f0f0;
-    border-radius: 7px;
+    border-radius: 6px;
     overflow: hidden;
-    margin-bottom: 10px;
+    margin-top: auto;
+    margin-bottom: 12px;
 }
 
 #pagina-metas .barra-interna {
     height: 100%;
     background-image: linear-gradient(to right, var(--cor1), var(--cor2));
-    border-radius: 7px;
-    transition: width 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+    border-radius: 6px;
+    transition: width 0.6s ease;
 }
 
 #pagina-metas .rodape-meta {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-
-#pagina-metas .percentual-texto {
     font-size: 12px;
-    font-weight: 600;
-    color: var(--cor4);
-}
-
-#pagina-metas .prazo {
-    font-size: 11px;
     color: #999;
 }
 
-#pagina-metas .btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ddd;
+.metaBox {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
 }
 
-#pagina-metas .btn-icon:hover { color: var(--cor1); }
-#pagina-metas .btn-icon.delete:hover { color: #ff4d4d; }
+.modal5 .box-conteudo {
+    background: white;
+    border-radius: 20px;
+    width: 65%;
+    height: 85%;
+    padding: 3%;
+    position: relative;
+    display: flex;
+}
 
-#pagina-metas .status-msg {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 50px;
+.modal5 .colunas {
+    display: grid;
+    grid-template-columns: 55% 45%;
+    width: 100%;
+    height: 100%;
+}
+
+.modal5 .col1 {
+    display: flex;
+    flex-direction: column;
+    padding-right: 4%;
+}
+
+.modal5 .col2 {
+    padding: 2% 0 2% 6%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-left: 1px solid #eee;
+    overflow: hidden;
+}
+
+.modal5 .linhaTitulo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal5 .linhaTitulo h1 {
+    font-size: 1.7rem;
+    margin: 0;
+    color: var(--cor4);
+}
+
+.acoes-modal {
+    display: flex;
+    gap: 12px;
+}
+
+.acoes-modal button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+.acoes-modal button i {
+    color: #ccc;
+    font-size: 20px;
+    transition: color 0.3s;
+}
+
+.acoes-modal .btn-edit:hover i { color: #e0d100; }
+.acoes-modal .btn-delete:hover i { color: #970019; }
+
+.modal5 .legenda {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.modal5 .legenda p { margin: 0; }
+
+.modal5 .grafico-meta {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal5 .container-graf {
+    width: 260px;
+    height: 260px;
+}
+
+.modal5 .movimentacoes {
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    min-height: 0;
+}
+
+#listaDepositos {
+    flex: 1;
+    overflow-y: auto;
+    margin-top: 10px;
+    padding-right: 10px;
+}
+
+.linha-dep {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+.positivo { color: #74c69d; font-weight: 600; }
+.negativo { color: #f68274; font-weight: 600; }
+
+.btn-deposito-principal {
+    background: linear-gradient(to bottom right, #8060F6, #6139f2);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    height: 55px;
+    width: 100%;
+    margin-top: 15px;
+    flex-shrink: 0;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.1s;
+}
+
+.btn-deposito-principal:hover { transform: scale(1.02); }
+
+.btn-salvar-deposito {
+    background: linear-gradient(to bottom right, #8060F6, #6139f2);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    width: 100%;
+    margin-top: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.1s;
+}
+
+.btn-salvar-deposito:hover { transform: scale(1.02); }
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 24px;
+    cursor: pointer;
     color: #bbb;
+}
+
+.adc-deposito, .adc-meta {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 3000;
+}
+
+.conteudo-deposito {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    width: 320px;
+    position: relative;
+}
+
+.conteudo-adc-meta {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    width: 350px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 350px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.conteudo-adc-meta h1 { font-size: 1.5rem; margin-top: 0; margin-bottom: 20px; color: var(--cor4); }
+
+.linha-adc-meta { display: flex; flex-direction: column; margin-bottom: 15px; }
+
+.linha-adc-meta p { margin: 0 0 5px 0; font-size: 14px; font-weight: 600; color: var(--cor4); }
+
+.linha-adc-meta input {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.linha-adc-meta input:focus { border-color: var(--cor1); }
+
+.btn-salvar {
+    background: linear-gradient(to bottom right, #8060F6, #6139f2);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px;
+    width: 100%;
+    margin-top: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.1s;
+}
+
+.btn-salvar:hover { transform: scale(1.02); }
+
+/* --- RESPONSIVIDADE ADICIONADA --- */
+
+@media (max-width: 1200px) {
+    #pagina-metas .grid-metas { grid-template-columns: repeat(2, 1fr); }
+    .modal5 .box-conteudo { width: 85%; }
+}
+
+@media (max-width: 768px) {
+    #pagina-metas .grid-metas { grid-template-columns: 1fr; }
+    .modal5 .box-conteudo { width: 95%; height: 95%; padding: 20px; overflow-y: auto; }
+    .modal5 .colunas { grid-template-columns: 1fr; }
+    .modal5 .col2 { border-left: none; border-top: 1px solid #eee; padding: 20px 0; }
+    .modal5 .container-graf { width: 200px; height: 200px; }
 }

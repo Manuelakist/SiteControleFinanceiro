@@ -1,5 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/**
+ * CONFIGURAÇÕES GLOBAIS
+ */
 :root {
     --cor1: #8060F6;
     --cor2: #A594F9;
@@ -31,6 +34,9 @@ body {
     min-height: 10px;
 }
 
+/**
+ * CARDS DO TOPO (KPIs)
+ */
 .info-box {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -55,8 +61,11 @@ body {
 
 .info-box p { margin-bottom: 0 !important; line-height: 1.2; }
 .info-box .box .lbl { color: #FFF; font-size: 20px; font-weight: 400; }
-.info-box .box .valor { font-size: 30px; font-weight: 700; } 
+.info-box .box .valor { font-size: 30px; font-weight: 700; margin: 0; } 
 
+/**
+ * GRID PRINCIPAL (PAINÉIS)
+ */
 .vg-tela {
     width: 100%;
     min-height: fit-content;
@@ -77,11 +86,16 @@ body {
     font-weight: 800;
     font-size: 18px;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.25s ease-in-out;
     margin-bottom: 10px;
     color: var(--cor4);
+    display: inline-block; 
 }
-.link:hover { transform: scale(1.03); }
+
+.link:hover { 
+    color: var(--cor1);
+    transform: translateX(4px); 
+}
 
 .grid-grafico { grid-row: 1 / 2; grid-column: 1 / 3; }
 .grid-orcamento { grid-row: 1 / 2; grid-column: 3 / 4; }
@@ -126,6 +140,9 @@ body {
     height: auto;
 }
 
+/**
+ * LISTAGEM DE METAS
+ */
 .lista-orc { padding-top: 20px; display: flex; flex-direction: column; gap: 15px; }
 .linha-orc { display: flex; flex-direction: row; align-items: center; border-bottom: 2px solid var(--cor-fundo); padding-bottom: 5px; }
 .linha-orc:last-child { border-bottom: none; }
@@ -138,15 +155,24 @@ body {
     background-image: linear-gradient(to bottom right, #8060F6, #6139f2); color: #fff;
     font-weight: 600; transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); cursor: pointer;
 }
-.grid-meta button:hover { transform: scale(1.05); }
+.grid-meta button:hover { transform: scale(1.03); }
 
-.grid-despesa .linha1, .grid-receita .linha1 { display: flex; flex-direction: row; align-items: center; padding-top: 5px; }
+/**
+ * FILTROS DE TABELA
+ */
+.grid-despesa .linha1, .grid-receita .linha1 { 
+    display: flex; 
+    flex-direction: row; 
+    align-items: center; 
+    padding-top: 5px; 
+}
+
 .grid-despesa .linha1 select, .grid-receita .linha1 select {
     border: none; background-color: #f7f7f7; border-radius: 15px; padding: 5px 10px; cursor: pointer;
 }
 
 .grid-despesa .linha2, .grid-receita .linha2 {
-    display: flex; flex-direction: row; gap: 10px; margin-top: 15px; align-items: center;
+    display: flex; flex-direction: row; gap: 10px; margin-top: 5px; align-items: center;
 }
 
 input[type="radio"] { display: none; }
@@ -164,46 +190,39 @@ input[type="radio"] { display: none; }
     border-width: 3px;
     opacity: 0.8;
 }
-.grid-despesa .linha2 label:hover, .grid-receita .linha2 label:hover { transform: scale(1.05); opacity: 1; }
+
+.grid-despesa .linha2 label:hover, .grid-receita .linha2 label:hover { 
+    transform: scale(1.05); opacity: 1; 
+}
+
+label[for="btn-todos"], label[for="btn-todos-rec"] { border-color: var(--cor2); color: var(--cor4); }
+label[for="btn-fixos"], label[for="btn-fixos-rec"] { border-color: var(--cor4); color: var(--cor4); }
+label[for="btn-parceladas"], label[for="btn-parceladas-rec"] { border-color: var(--cor1); color: var(--cor4); }
+label[for="btn-pontuais"], label[for="btn-pontuais-rec"] { border-color: var(--cor3); color: var(--cor4); }
 
 input[id="btn-todos"]:checked + label, 
-input[id="btn-todos-rec"]:checked + label {
-    background-color: var(--cor2) !important; color: #fff !important; opacity: 1;
-}
+input[id="btn-todos-rec"]:checked + label { background-color: var(--cor2) !important; color: #fff !important; opacity: 1; }
 
 input[id="btn-fixos"]:checked + label, 
-input[id="btn-fixos-rec"]:checked + label {
-    background-color: var(--cor4) !important; color: #fff !important; opacity: 1;
-}
+input[id="btn-fixos-rec"]:checked + label { background-color: var(--cor4) !important; color: #fff !important; opacity: 1; }
 
 input[id="btn-parceladas"]:checked + label, 
-input[id="btn-parceladas-rec"]:checked + label {
-    background-color: var(--cor1) !important; color: #fff !important; opacity: 1;
-}
+input[id="btn-parceladas-rec"]:checked + label { background-color: var(--cor1) !important; color: #fff !important; opacity: 1; }
 
 input[id="btn-pontuais"]:checked + label, 
-input[id="btn-pontuais-rec"]:checked + label {
-    background-color: var(--cor3) !important; color: #fff !important; opacity: 1;
-}
+input[id="btn-pontuais-rec"]:checked + label { background-color: var(--cor3) !important; color: #fff !important; opacity: 1; }
 
+/**
+ * TABELAS RESUMO DO DASHBOARD
+ */
 .tabela { 
     display: flex; 
     flex-direction: column; 
-    margin-top: 5px; 
+    margin-top: 10px; 
     overflow-y: auto; 
     flex: 1; 
     min-height: 0; 
-    justify-content: flex-start !important;
-}
-
-.grid-despesa .tabela .linha, .grid-receita .tabela .linha {
-    display: grid; 
-    grid-template-columns: 20px 2fr 1fr 1fr; 
-    gap: 10px; 
-    align-items: center;
-    border-top: 1px solid var(--cor-fundo); 
-    border-bottom: 1px solid var(--cor-fundo); 
-    padding: 8px 5px;
+    padding-right: 0; 
 }
 
 .grid-despesa .tabela .linha .cor, .grid-receita .tabela .linha .cor { width: 15px; height: 15px; border-radius: 50%; }
@@ -221,19 +240,72 @@ input[id="btn-pontuais-rec"]:checked + label {
     padding: 4px 8px; border-radius: 5px; text-align: center; margin: 0 !important; justify-self: end;
 }
 
-.tabela::-webkit-scrollbar { 
-    width: 6px; 
+.tabela::-webkit-scrollbar { width: 6px; }
+.tabela::-webkit-scrollbar-track { background: transparent; }
+.tabela::-webkit-scrollbar-thumb { background: #CCCCCC; border-radius: 10px; }
+.tabela::-webkit-scrollbar-thumb:hover { background: #BBBBBB; }
+
+.vg .linha1 { margin-bottom: 0 !important; }
+.vg .linha1 .link { margin-bottom: 0 !important; }
+.vg .tabela { justify-content: flex-start !important; }
+
+.vg .grid-despesa .tabela .linha, 
+.vg .grid-receita .tabela .linha {
+    display: grid !important;
+    grid-template-columns: 15px 2fr 1fr auto !important;
+    gap: 15px !important;
+    align-items: center !important;
+    border-top: 1px solid var(--cor-fundo) !important;
+    border-bottom: 1px solid var(--cor-fundo) !important;
+    padding: 10px 5px !important;
+    width: 100% !important;
 }
 
-.tabela::-webkit-scrollbar-track {
-    background: transparent; 
+.vg .grid-despesa .tabela .linha .categoria,
+.vg .grid-receita .tabela .linha .categoria {
+    white-space: nowrap !important;
+    min-width: max-content !important;
 }
 
-.tabela::-webkit-scrollbar-thumb { 
-    background: #CCCCCC; 
-    border-radius: 10px; 
+
+/**
+ * MEDIA QUERIES PARA RESPONSIVIDADE
+ */
+@media (max-width: 1200px) {
+    .info-box {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 180px);
+    }
+    .vg-tela {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+    }
+    .grid-grafico { grid-column: 1 / 3; grid-row: 1; }
+    .grid-orcamento { grid-column: 1 / 2; grid-row: 2; }
+    .grid-meta { grid-column: 2 / 3; grid-row: 2; }
+    .grid-despesa { grid-column: 1 / 3; grid-row: 3; }
+    .grid-receita { grid-column: 1 / 3; grid-row: 4; }
 }
 
-.tabela::-webkit-scrollbar-thumb:hover {
-    background: #BBBBBB; 
+@media (max-width: 768px) {
+    .info-box {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 150px);
+    }
+    .vg-tela {
+        display: flex;
+        flex-direction: column;
+    }
+    .grid-despesa .linha2, .grid-receita .linha2 {
+        flex-wrap: wrap; 
+        justify-content: center;
+    }
+    .vg .grid-despesa .tabela .linha, 
+    .vg .grid-receita .tabela .linha {
+        grid-template-columns: 15px 1fr auto !important; 
+    }
+    .vg .grid-despesa .tabela .linha .categoria,
+    .vg .grid-receita .tabela .linha .categoria {
+        display: none !important;
+    }
 }

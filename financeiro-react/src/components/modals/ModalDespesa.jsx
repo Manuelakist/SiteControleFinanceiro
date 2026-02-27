@@ -2,181 +2,88 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { despesaService } from '../../services/despesa.service';
 import { categoriaService } from '../../services/categoria.service';
+import { authService } from '../../services/auth.service';
+import { contaService } from '../../services/conta.service';
 import '../../assets/css/components.css';
 
 /**
- * Componente modal para registo de despesas.
- * Ajustado para garantir a integridade do parâmetro 'tempo' exigido pelo DespesaService.java.
+ * Modal para registo de despesas.
+ * Gere gastos pontuais, fixos ou parcelados com suporte a novas categorias.
  */
-export function ModalDespesa({ isOpen, onClose, idConta, onDespesaAdicionada }) {
-    if (!isOpen) return null;
-
+export function ModalDespesa({ isOpen, onClose, onDespesaAdicionada }) {
     const [form, setForm] = useState({
-        descricao: '',
-        valor: '',
-        data: new Date().toISOString().split('T')[0],
-        categoriaId: '', 
-        novaCategoriaNome: '',
-        tipo: 'PONTUAL',
-        tempo: '2'
+        descricao: '', valor: '', data: new Date().toISOString().split('T')[0],
+        categoriaId: '', novaCategoriaNome: '', tipo: 'PONTUAL', tempo: '1'
     });
-
     const [categorias, setCategorias] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [erro, setErro] = useState('');
+    const [idConta, setIdConta] = useState(null);
 
     useEffect(() => {
-        if (isOpen && idConta) {
-            carregarCategorias();
-        }
-    }, [isOpen, idConta]);
+        if (isOpen) carregarCategorias();
+    }, [isOpen]);
 
     const carregarCategorias = async () => {
-        try {
-            const data = await categoriaService.listarCategoriasDespesa(idConta);
-            setCategorias(data || []);
-            if (data && data.length > 0 && !form.categoriaId) {
-                setForm(prev => ({ ...prev, categoriaId: data[0].id }));
-            }
-        } catch (error) {
-            setErro('Falha na comunicação com a API de categorias.');
+        const usuario = authService.getUsuarioLogado();
+        const resContas = await contaService.getContasPorUsuario(usuario.id);
+        if (resContas.data?.length > 0 || resContas.length > 0) {
+            const id = resContas.data ? resContas.data[0].id : resContas[0].id;
+            setIdConta(id);
+            const resCat = await categoriaService.listarCategoriasDespesa(id);
+            setCategorias(resCat.data || resCat || []);
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm(prev => ({ ...prev, [name]: value }));
-    };
+    const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-    const handleSubmit = async (e) => {
+    async function handleSubmit(e) {
         e.preventDefault();
-        setLoading(true);
-        setErro('');
-
-        try {
-            let catIdFinal = form.categoriaId;
-
-            if (form.categoriaId === 'NOVA_CATEGORIA') {
-                if (!form.novaCategoriaNome.trim()) {
-                    throw new Error('O nome da nova categoria é obrigatório.');
-                }
-                const respostaCat = await categoriaService.adicionarCategoriaDespesa({
-                    nome: form.novaCategoriaNome,
-                    contaDTO: { id: Number(idConta) }
-                });
-                catIdFinal = respostaCat.data ? respostaCat.data.id : respostaCat.id;
-            }
-
-            /**
-             * Lógica estrutural do parâmetro tempo:
-             * PONTUAL: Tempo = 1 (Garante 1 iteração no loop do Java)
-             * FIXA: Tempo = 12 (Projeta a despesa para 12 meses, comportamento padrão para fixas)
-             * PARCELADA: Tempo = valor escolhido pelo utilizador
-             */
-            let tempoCalculado = 1;
-            if (form.tipo === 'FIXA') tempoCalculado = 12;
-            if (form.tipo === 'PARCELADA') tempoCalculado = parseInt(form.tempo, 10);
-
-            const payload = {
-                descricao: form.descricao.trim(),
-                valor: Number(parseFloat(form.valor).toFixed(2)),
-                data: form.data, 
-                tipo: form.tipo.toLowerCase(),
-                tempo: tempoCalculado,
-                contaDTO: { id: Number(idConta) },
-                categoriaDespesaDTO: { id: Number(catIdFinal) }
-            };
-
-            await despesaService.adicionarDespesa(payload);
-            
-            if (onDespesaAdicionada) {
-                onDespesaAdicionada();
-            }
-            onClose();
-
-        } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setErro(`Requisição inválida (400). Verifique a consistência dos dados numéricos.`);
-            } else {
-                setErro(error.message || 'Erro interno na comunicação com a API.');
-            }
-        } finally {
-            setLoading(false);
+        let catId = form.categoriaId;
+        if (catId === 'NOVA_CATEGORIA') {
+            const res = await categoriaService.adicionarCategoriaDespesa({ nome: form.novaCategoriaNome, contaDTO: { id: idConta } });
+            catId = res.data?.id || res.id;
         }
-    };
+        let tempo = form.tipo === 'FIXA' ? 12 : (form.tipo === 'PARCELADA' ? parseInt(form.tempo) : 1);
+        await despesaService.adicionarDespesa({
+            descricao: form.descricao, valor: parseFloat(form.valor), data: form.data,
+            tipo: form.tipo, tempo, contaDTO: { id: idConta },
+            categoriaDespesaDTO: { id: parseInt(catId) }
+        });
+        onDespesaAdicionada ? onDespesaAdicionada() : window.location.reload();
+        onClose();
+    }
+
+    if (!isOpen) return null;
 
     return createPortal(
         <div className="modal-overlay" onClick={onClose}>
-            <div className="adc-conteudo" onClick={(e) => e.stopPropagation()}>
+            <div className="adc-conteudo" onClick={e => e.stopPropagation()}>
                 <span className="close-btn" onClick={onClose}>&times;</span>
-                <h3>Nova Despesa</h3>
-                
-                <form onSubmit={handleSubmit}>
-                    {erro && <p style={{ color: '#d9534f', textAlign: 'center', fontSize: '13px', marginBottom: '10px', fontWeight: 'bold' }}>{erro}</p>}
-                    
-                    <div className="inputs">
-                        <div className="input-desc linha">
-                            <i className="material-icons">edit</i>
-                            <input type="text" name="descricao" placeholder="descrição" value={form.descricao} onChange={handleChange} required />
-                        </div>
-
-                        <div className="linha-valor">
-                            <div className="input-valor linha">
-                                <i className="material-icons">attach_money</i>
-                                <span className="rs">R$</span>
-                                <input type="number" name="valor" placeholder="valor" step="0.01" value={form.valor} onChange={handleChange} required />
-                            </div>
-                            <div className="input-categoria linha">
-                                <i className="material-icons">category</i>
-                                <select name="categoriaId" value={form.categoriaId} onChange={handleChange} required>
-                                    <option value="" disabled>categoria</option>
-                                    {categorias.map(cat => (
-                                        <option key={cat.id} value={cat.id}>{cat.nome}</option>
-                                    ))}
-                                    <option value="NOVA_CATEGORIA">+ criar nova categoria...</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        {form.categoriaId === 'NOVA_CATEGORIA' && (
-                            <div className="input-nova-cat linha">
-                                <i className="material-icons">add_circle</i>
-                                <input type="text" name="novaCategoriaNome" placeholder="nome da nova categoria" value={form.novaCategoriaNome} onChange={handleChange} required />
-                            </div>
-                        )}
-
-                        <div className="input-tipo linha" style={{borderBottom: 'none'}}>
-                            <div className="radio-tipo">
-                                <input type="radio" id="pontual-des" name="tipo" value="PONTUAL" checked={form.tipo === 'PONTUAL'} onChange={handleChange} />
-                                <label htmlFor="pontual-des">pontual</label>
-
-                                <input type="radio" id="fixa-des" name="tipo" value="FIXA" checked={form.tipo === 'FIXA'} onChange={handleChange} />
-                                <label htmlFor="fixa-des">fixa</label>
-
-                                <input type="radio" id="parcelada-des" name="tipo" value="PARCELADA" checked={form.tipo === 'PARCELADA'} onChange={handleChange} />
-                                <label htmlFor="parcelada-des">parcelada</label>
-                            </div>
-                        </div>
-
-                        {form.tipo === 'PARCELADA' && (
-                            <div className="input-parcelas linha">
-                                <i className="material-icons">reorder</i>
-                                <input type="number" name="tempo" placeholder="nº de parcelas" min="2" value={form.tempo} onChange={handleChange} required />
-                            </div>
-                        )}
-
-                        <div className="input-data linha">
-                            <i className="material-icons">calendar_today</i>
-                            <input type="date" name="data" value={form.data} onChange={handleChange} required />
+                <h3>Adicionar Despesa</h3>
+                <form onSubmit={handleSubmit} className="inputs">
+                    <div className="linha"><i className="material-icons">edit</i><input type="text" name="descricao" placeholder="Descrição" value={form.descricao} onChange={handleChange} required /></div>
+                    <div className="linha-valor">
+                        <div className="linha"><p className="rs">R$</p><input type="number" step="0.01" name="valor" placeholder="0,00" value={form.valor} onChange={handleChange} required /></div>
+                        <div className="linha"><i className="material-icons">category</i>
+                            <select name="categoriaId" value={form.categoriaId} onChange={handleChange} required>
+                                <option value="">Categoria...</option>
+                                {categorias.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
+                                <option value="NOVA_CATEGORIA">Nova Categoria</option>
+                            </select>
                         </div>
                     </div>
-
-                    <button type="submit" className="btn-salvar" disabled={loading}>
-                        {loading ? 'a processar...' : 'salvar'}
-                    </button>
+                    {form.categoriaId === 'NOVA_CATEGORIA' && <div className="linha"><i className="material-icons">add_circle</i><input type="text" name="novaCategoriaNome" placeholder="Nome" value={form.novaCategoriaNome} onChange={handleChange} required /></div>}
+                    <div className="linha"><i className="material-icons">calendar_today</i><input type="date" name="data" value={form.data} onChange={handleChange} required /></div>
+                    <div className="input-tipo">
+                        <div className="radio-tipo">
+                            <input type="radio" id="p-des" name="tipo" value="PONTUAL" checked={form.tipo === 'PONTUAL'} onChange={handleChange} /><label htmlFor="p-des">Pontual</label>
+                            <input type="radio" id="f-des" name="tipo" value="FIXA" checked={form.tipo === 'FIXA'} onChange={handleChange} /><label htmlFor="f-des">Fixa</label>
+                            <input type="radio" id="par-des" name="tipo" value="PARCELADA" checked={form.tipo === 'PARCELADA'} onChange={handleChange} /><label htmlFor="par-des">Parcelada</label>
+                        </div>
+                    </div>
+                    {form.tipo === 'PARCELADA' && <div className="linha"><i className="material-icons">reorder</i><input type="number" name="tempo" placeholder="Parcelas" value={form.tempo} onChange={handleChange} required /></div>}
+                    <button type="submit" className="btn-salvar">Salvar Despesa</button>
                 </form>
             </div>
-        </div>,
-        document.body
+        </div>, document.body
     );
 }

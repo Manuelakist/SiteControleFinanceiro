@@ -38,7 +38,9 @@ public class ControllerDespesa {
     }
 
     @GetMapping("/conta/{idConta}")
-    public ResponseEntity<List<DespesaDTO>> listarDespesasPorConta(@PathVariable Long idConta, @RequestParam Date dataInicial, @RequestParam Date dataFinal) {
+    public ResponseEntity<List<DespesaDTO>> listarDespesasPorConta(@PathVariable Long idConta,
+                                                                   @RequestParam(required = false) Date dataInicial,
+                                                                   @RequestParam(required = false) Date dataFinal) {
         return despesaService.listarDespesasPorConta(idConta, dataInicial, dataFinal);
     }
 

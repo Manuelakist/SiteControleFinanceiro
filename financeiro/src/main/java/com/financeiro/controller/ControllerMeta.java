@@ -35,8 +35,8 @@ public class ControllerMeta {
         return metaService.buscarMetaPorId(id);
     }
 
-    @GetMapping
-    public ResponseEntity<List<MetaDTO>> listarMetasPorConta(@RequestParam Long idConta) {
+    @GetMapping("/conta/{idConta}") 
+    public ResponseEntity<List<MetaDTO>> listarMetasPorConta(@PathVariable Long idConta) {
         return metaService.listarMetasPorConta(idConta);
     }
 

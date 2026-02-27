@@ -1,19 +1,22 @@
 import { api } from './api';
 
+/**
+ * Serviço de integração com a API de Orçamentos.
+ */
 export const orcamentoService = {
     async listarPorConta(idConta) {
-        return await api.get(`/orcamento/conta/${idConta}`);
+        return await api.get(`/orcamento?idConta=${idConta}`);
     },
 
-    async salvar(orcamento) {
+    async adicionarOrcamento(orcamento) {
         return await api.post('/orcamento', orcamento);
     },
 
-    async atualizar(id, orcamento) {
+    async alterarOrcamento(id, orcamento) {
         return await api.put(`/orcamento/${id}`, orcamento);
     },
 
-    async deletar(id) {
+    async deletarOrcamento(id) {
         return await api.delete(`/orcamento/${id}`);
     }
 };

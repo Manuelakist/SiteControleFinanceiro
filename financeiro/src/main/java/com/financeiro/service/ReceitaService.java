@@ -56,6 +56,8 @@ public class ReceitaService {
 
             try {
                 Receita receitaSalva = receitaRepository.save(receita);
+                conta.setSaldo(conta.getSaldo().add(receita.getValor()));
+                contaRepository.save(conta);
                 novaReceitaDTO.setId(receitaSalva.getId());
                 receitasCadastradas.add(novaReceitaDTO);
             } catch (Exception e) {

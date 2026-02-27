@@ -56,6 +56,8 @@ public class DespesaService {
 
             try {
                 Despesa despesaSalva = despesaRepository.save(despesa);
+                conta.setSaldo(conta.getSaldo().subtract(despesa.getValor()));
+                contaRepository.save(conta);
                 novaDespesaDTO.setId(despesaSalva.getId());
                 despesasCadastradas.add(novaDespesaDTO);
             } catch (Exception e) {

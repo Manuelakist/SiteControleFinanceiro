@@ -2,14 +2,15 @@ import { Navigate } from 'react-router-dom';
 import { authService } from '../services/auth.service';
 
 /**
- * Componente de proteção de rotas.
- * Redireciona para o login se o utilizador não estiver autenticado.
+ * @component ProtectedRoute
+ * @description Wrapper de rota que verifica a autenticação do utilizador.
+ * Redireciona para o login caso não exista uma sessão ativa.
  */
 export function ProtectedRoute({ children }) {
-    const usuario = authService.getUsuarioLogado();
+    const user = authService.getUsuarioLogado();
 
-    if (!usuario) {
-        return <Navigate to="/" replace />;
+    if (!user) {
+        return <Navigate to="/login" replace />;
     }
 
     return children;

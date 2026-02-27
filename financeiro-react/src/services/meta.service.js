@@ -1,22 +1,23 @@
 import { api } from './api';
 
-/**
- * Serviço para persistência e recuperação de metas financeiras.
- */
 export const metaService = {
-    async listarPorUsuario(idUsuario) {
-        return await api.get(`/meta/usuario/${idUsuario}`);
+    listarPorConta: async (idConta) => {
+        return await api.get(`/meta/conta/${idConta}`);
     },
 
-    async salvar(meta) {
-        return await api.post('/meta', meta);
+    buscarMetaPorId: async (id) => {
+        return await api.get(`/meta/${id}`);
     },
 
-    async atualizar(id, meta) {
-        return await api.put(`/meta/${id}`, meta);
+    adicionarMeta: async (dados) => {
+        return await api.post('/meta', dados);
     },
 
-    async deletar(id) {
+    alterarMeta: async (id, dados) => {
+        return await api.put(`/meta/${id}`, dados);
+    },
+
+    deletarMeta: async (id) => {
         return await api.delete(`/meta/${id}`);
     }
 };

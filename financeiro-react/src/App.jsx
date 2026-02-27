@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './components/Login';
 import { Overview } from './pages/Overview';
-import { FluxoCaixa } from './pages/FluxoCaixa';
+import { FluxoCaixa } from './pages/Fluxo';
 import { Orcamentos } from './pages/Orcamentos';
 import { Metas } from './pages/Metas';
 import { Relatorios } from './pages/Relatorios';

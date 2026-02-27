@@ -1,128 +1,43 @@
-#pagina-orcamentos {
-    width: 100%;
-    padding: 20px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-#pagina-orcamentos .cabecalho-orc {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
+#pagina-orcamentos * { box-sizing: border-box; }
+#pagina-orcamentos { width: 100%; padding: 20px; }
+#pagina-orcamentos .conteudo { display: flex; flex-direction: column; width: 100%; }
 
-#pagina-orcamentos .titulo {
-    font-size: 24px;
-    font-weight: 800;
-    color: var(--cor4);
-    margin: 0;
-}
+#pagina-orcamentos .cabecalho-orc { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; }
+#pagina-orcamentos .coluna { display: grid; grid-template-rows: repeat(2, 1fr); gap: 20px; }
+#pagina-orcamentos .box { display: flex; flex-direction: column; background-color: var(--cor2); border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); margin: 0 !important; }
+#pagina-orcamentos .box .titulo { font-size: 20px; font-weight: 400; margin: 0 !important; }
+#pagina-orcamentos .box .valor { font-size: 30px; font-weight: 700; align-self: flex-end; margin: 0 !important; } 
 
-#pagina-orcamentos .btn-novo-orc {
-    background-color: var(--cor1);
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: transform 0.2s;
-}
+#pagina-orcamentos .caixa-1 { background-image: linear-gradient(to bottom right, #8060F6, #6139f2); }
+#pagina-orcamentos .caixa-2 { background-image: linear-gradient(to bottom right, #1c2230, #04060b); color: #FFF; }
+#pagina-orcamentos .caixa-3 { background-image: linear-gradient(to bottom right, #231846, #130b2d); color: #FFF; }
+#pagina-orcamentos .caixa-4 { background-image: linear-gradient(to bottom right, #b0a1fe, #8c79e9); }
 
-#pagina-orcamentos .btn-novo-orc:hover {
-    transform: scale(1.05);
-}
+#pagina-orcamentos .lista { background-color: #FFF; width: 100%; height: fit-content; display: flex; flex-direction: column; border-radius: 10px; margin-top: 30px; padding: 30px 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); }   
+#pagina-orcamentos .cabecalho-lista { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 80px; justify-content: space-between; align-items: center; font-weight: 700; font-size: 14px; color: var(--cor4); margin-bottom: 30px; padding: 0 20px; white-space: nowrap; }
+#pagina-orcamentos .cbc-barra { justify-self: end; }
 
-#pagina-orcamentos .grid-orcamentos {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
+#pagina-orcamentos #tabela-orc .linha { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr auto; justify-content: space-between; align-items: center; margin: 10px 20px; padding-bottom: 20px; border-bottom: 1px solid var(--cor-fundo); }
+#pagina-orcamentos #tabela-orc .linha:last-child { border: none; }
+#pagina-orcamentos .barra-container { position: relative; width: 200px; height: 30px; background-color: var(--cor-fundo); border-radius: 25px; overflow: hidden; }
+#pagina-orcamentos .barra-progresso { height: 100%; background-color: var(--cor1); border-radius: 25px; display: flex; align-items: center; justify-content: center; color: white; position: relative; transition: width 0.3s ease; }
+#pagina-orcamentos .porcentagem-texto { position: absolute; top: 50%; transform: translateY(-50%); color: #fff; white-space: nowrap; pointer-events: none; font-size: 12px; }
+#pagina-orcamentos .barra-container.pequena .porcentagem-texto { left: 100%; margin-left: 5px; color: var(--cor4); }
 
-#pagina-orcamentos .box-orcamento {
-    background-color: #ffffff !important;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.05);
-}
+#pagina-orcamentos #tabela-orc .linha .acoes { justify-self: end; display: flex; flex-direction: row; gap: 8px; width: 0; opacity: 0; overflow: hidden; transition: width 0.8s ease, opacity 0.8s ease; align-items: center; }
+#pagina-orcamentos #tabela-orc .linha:hover .acoes { width: 80px; opacity: 1; padding-left: 10px; justify-content: flex-end; }
+#pagina-orcamentos #tabela-orc .linha button { border: none; background-color: #fff; cursor: pointer; transition: 0.2s all; display: flex; align-items: center; justify-content: center; padding: 0; }
+#pagina-orcamentos #tabela-orc .linha .alt i { color: #e0d100; font-size: 20px; }
+#pagina-orcamentos #tabela-orc .linha .delete i { color: #970019; font-size: 20px; }
 
-#pagina-orcamentos .topo-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+/* RESPONSIVIDADE ADICIONADA */
+@media (max-width: 1024px) {
+    #pagina-orcamentos .cabecalho-lista { display: none; }
+    #pagina-orcamentos #tabela-orc .linha { grid-template-columns: 1fr 1fr; gap: 15px; }
+    #pagina-orcamentos .barra-container { width: 100%; grid-column: span 2; }
 }
-
-#pagina-orcamentos .cat-nome {
-    font-weight: 700;
-    font-size: 18px;
-    color: var(--cor3);
-    margin: 0;
-}
-
-#pagina-orcamentos .acoes {
-    display: flex;
-    gap: 10px;
-}
-
-#pagina-orcamentos .btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: #ccc;
-    transition: color 0.2s;
-}
-
-#pagina-orcamentos .btn-icon:hover {
-    color: var(--cor1);
-}
-
-#pagina-orcamentos .btn-icon.delete:hover {
-    color: #d32f2f;
-}
-
-#pagina-orcamentos .valores {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-}
-
-#pagina-orcamentos .vlr-item .label {
-    font-size: 12px;
-    color: #888;
-    margin: 0;
-}
-
-#pagina-orcamentos .vlr-item .quantia {
-    font-weight: 600;
-    font-size: 16px;
-    margin: 0;
-}
-
-#pagina-orcamentos .barra-container {
-    width: 100%;
-    height: 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-bottom: 8px;
-}
-
-#pagina-orcamentos .barra-progresso {
-    height: 100%;
-    border-radius: 5px;
-    transition: width 0.5s ease-in-out;
-}
-
-#pagina-orcamentos .porcentagem {
-    font-size: 12px;
-    color: #666;
-    text-align: right;
-    margin: 0;
-}
-
-#pagina-orcamentos .msg-status {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 40px;
-    color: #999;
+@media (max-width: 768px) {
+    #pagina-orcamentos .cabecalho-orc { grid-template-columns: 1fr; }
 }

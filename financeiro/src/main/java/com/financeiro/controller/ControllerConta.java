@@ -38,8 +38,8 @@ public class ControllerConta {
         return contaService.buscarContaPorId(id);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ContaDTO>> listarContasPorUsuario(@RequestParam Long idUsuario) {
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<List<ContaDTO>> listarContasPorUsuario(@PathVariable Long idUsuario) { // <-- Mudou de @RequestParam para @PathVariable
         return contaService.listarContasPorUsuario(idUsuario);
     }
 
