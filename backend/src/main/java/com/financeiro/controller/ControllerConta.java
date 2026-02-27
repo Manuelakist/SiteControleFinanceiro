@@ -15,7 +15,6 @@ import com.financeiro.service.ContaService;
  */
 @RestController
 @RequestMapping("/conta")
-@CrossOrigin(origins = "*")
 public class ControllerConta {
 
     @Autowired

@@ -13,7 +13,6 @@ import com.financeiro.service.CategoriaDespesaService;
  */
 @RestController
 @RequestMapping("/categoria-despesa")
-@CrossOrigin(origins = "*")
 public class ControllerCategoriaDespesa {
 
     @Autowired

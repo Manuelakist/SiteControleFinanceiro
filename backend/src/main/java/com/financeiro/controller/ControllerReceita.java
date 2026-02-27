@@ -22,7 +22,6 @@ import com.financeiro.service.ReceitaService;
 
 @RestController
 @RequestMapping("/receita")
-@CrossOrigin(origins = "*")
 public class ControllerReceita {
 
     @Autowired
