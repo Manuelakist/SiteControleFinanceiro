@@ -19,6 +19,7 @@ import com.financeiro.service.DepositoService;
 
 @RestController
 @RequestMapping("/deposito")
+@CrossOrigin(origins = "*")
 public class ControllerDeposito {
 
     @Autowired
