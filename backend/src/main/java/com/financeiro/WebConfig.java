@@ -8,6 +8,12 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+
 @Configuration
 public class WebConfig {
 
@@ -16,15 +22,9 @@ public class WebConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowCredentials(true);
-
-        config.setAllowedOriginPatterns(Arrays.asList(
-                "https://site-controle-financeiro-theta.vercel.app",
-                "https://*-manuelakists-projects.vercel.app",
-                "http://localhost:5173",
-                "http://localhost:3000"
-        ));
-
+        // MUDANÇA AQUI: Desativamos credenciais para permitir o "*"
+        config.setAllowCredentials(false);
+        config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
 
