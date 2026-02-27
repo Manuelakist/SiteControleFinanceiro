@@ -1,0 +1,58 @@
+/* src/index.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif; /* Forçando a fonte certa pra tudo */
+}
+
+ul {
+    list-style: none;
+    padding-left: 0 !important; /* ISSO corrige o menu lateral empurrado */
+}a* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #EFEFEF;
+    overflow-x: hidden;
+}
+
+#root {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* Correção para garantir que os links não tenham sublinhado por padrão */
+a {
+    text-decoration: none;
+}
+
+/* Reset para listas */
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+body, #root {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #EFEFEF;
+}
+
+/* Garante o layout lado a lado */
+#root {
+    display: flex;
+    flex-direction: row;
+}
