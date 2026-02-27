@@ -11,9 +11,9 @@ async function request(endpoint, options = {}) {
     const config = {
         ...options,
         headers: {
-            ...defaultHeaders,
-            ...options.headers,
-        },
+        ...(options.method !== 'GET' && { 'Content-Type': 'application/json' }),
+        ...options.headers,
+    },
     };
 
     try {
